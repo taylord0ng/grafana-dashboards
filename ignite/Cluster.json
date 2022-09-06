@@ -3,7 +3,10 @@
     "list": [
       {
         "builtIn": 1,
-        "datasource": "-- Grafana --",
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
@@ -20,10 +23,7 @@
   },
   "editable": true,
   "fiscalYearStartMonth": 0,
-  "gnetId": null,
   "graphTooltip": 0,
-  "id": 105,
-  "iteration": 1648109674309,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -66,7 +66,10 @@
         "noDataState": "no_data",
         "notifications": []
       },
-      "datasource": null,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -132,15 +135,22 @@
           "placement": "bottom"
         },
         "tooltip": {
-          "mode": "single"
+          "mode": "single",
+          "sort": "none"
         }
       },
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
           "exemplar": true,
-          "expr": "sys_memory_heap_used/sys_memory_heap_max",
+          "expr": "avg(sys_memory_heap_used/sys_memory_heap_max) by (namespace,pod)",
           "interval": "",
-          "legendFormat": "Sys Heap Usage {{job}}",
+          "legendFormat": "{{namespace}}_{{pod}}",
+          "range": true,
           "refId": "sysHeapUsage"
         }
       ],
@@ -194,7 +204,10 @@
         "noDataState": "no_data",
         "notifications": []
       },
-      "datasource": null,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -250,7 +263,7 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 9,
+        "h": 8,
         "w": 12,
         "x": 12,
         "y": 0
@@ -263,15 +276,22 @@
           "placement": "bottom"
         },
         "tooltip": {
-          "mode": "single"
+          "mode": "single",
+          "sort": "none"
         }
       },
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
           "exemplar": true,
-          "expr": "sys_CpuLoad",
+          "expr": "avg(sys_CpuLoad) by (namespace,pod)",
           "interval": "",
-          "legendFormat": "CpuLoad_{{job}}",
+          "legendFormat": "{{namespace}}_{{pod}}",
+          "range": true,
           "refId": "A"
         }
       ],
@@ -371,7 +391,10 @@
         "noDataState": "no_data",
         "notifications": []
       },
-      "datasource": null,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -427,7 +450,7 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 9,
+        "h": 8,
         "w": 12,
         "x": 0,
         "y": 8
@@ -440,11 +463,16 @@
           "placement": "bottom"
         },
         "tooltip": {
-          "mode": "single"
+          "mode": "single",
+          "sort": "none"
         }
       },
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
           "exemplar": true,
           "expr": "sum by (job) (cluster_ActiveBaselineNodes)",
           "format": "time_series",
@@ -454,6 +482,10 @@
           "refId": "activeBaseline"
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
           "exemplar": true,
           "expr": "sum by (job) (cluster_TotalBaselineNodes)",
           "hide": false,
@@ -462,6 +494,10 @@
           "refId": "totalBaseline"
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
           "exemplar": true,
           "expr": "sum by (job) (cluster_TotalBaselineNodes-cluster_ActiveBaselineNodes)",
           "hide": false,
@@ -470,6 +506,10 @@
           "refId": "diffBaseline"
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
           "exemplar": true,
           "expr": "sum by (job) (cluster_TotalServerNodes) ",
           "hide": false,
@@ -528,7 +568,10 @@
         "noDataState": "no_data",
         "notifications": []
       },
-      "datasource": null,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -587,7 +630,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 9
+        "y": 8
       },
       "id": 6,
       "options": {
@@ -597,15 +640,22 @@
           "placement": "bottom"
         },
         "tooltip": {
-          "mode": "single"
+          "mode": "single",
+          "sort": "none"
         }
       },
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
           "exemplar": true,
-          "expr": "sys_ThreadCount",
+          "expr": " avg(sys_ThreadCount) by (namespace,pod)",
           "interval": "",
-          "legendFormat": "sys_ThreadCount_{{job}}",
+          "legendFormat": "{{namespace}}_{{pod}}",
+          "range": true,
           "refId": "A"
         }
       ],
@@ -621,7 +671,10 @@
       "type": "timeseries"
     },
     {
-      "datasource": null,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -676,7 +729,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 17
+        "y": 16
       },
       "id": 8,
       "options": {
@@ -686,23 +739,36 @@
           "placement": "bottom"
         },
         "tooltip": {
-          "mode": "single"
+          "mode": "single",
+          "sort": "none"
         }
       },
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
           "exemplar": true,
-          "expr": "sys_memory_heap_max/1000/1000/1000",
+          "expr": "avg(sys_memory_heap_max/1000/1000/1000) by (namespace,pod)",
           "interval": "",
-          "legendFormat": "heap_max_{{job}}",
+          "legendFormat": "heap_max_{{namespace}}_{{pod}}",
+          "range": true,
           "refId": "A"
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
           "exemplar": true,
-          "expr": "sys_memory_heap_used/1000/1000",
+          "expr": "avg(sys_memory_heap_used/1000/1000) by (namespace,pod)",
           "hide": false,
           "interval": "",
-          "legendFormat": "heap_used_{{job}}",
+          "legendFormat": "heap_used_{{namespace}}_{{pod}}",
+          "range": true,
           "refId": "heapUsed"
         }
       ],
@@ -711,25 +777,24 @@
     }
   ],
   "refresh": "",
-  "schemaVersion": 31,
+  "schemaVersion": 36,
   "style": "dark",
   "tags": [],
   "templating": {
     "list": [
       {
-        "allValue": null,
         "current": {
           "selected": false,
-          "text": "ignite-2",
-          "value": "ignite-2"
+          "text": "ignite",
+          "value": "ignite"
         },
-        "datasource": null,
+        "datasource": {
+          "type": "prometheus",
+          "uid": "prometheus"
+        },
         "definition": "sys_UpTime",
-        "description": null,
-        "error": null,
         "hide": 0,
         "includeAll": false,
-        "label": null,
         "multi": false,
         "name": "instance",
         "options": [],
@@ -746,12 +811,13 @@
     ]
   },
   "time": {
-    "from": "now-6h",
+    "from": "now-1h",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "Ignite-Cluster",
   "uid": "Ignite-Cluster",
-  "version": 10
+  "version": 1,
+  "weekStart": ""
 }
