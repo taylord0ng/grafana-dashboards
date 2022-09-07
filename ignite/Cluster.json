@@ -24,6 +24,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
+  "id": 245,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -781,34 +782,7 @@
   "style": "dark",
   "tags": [],
   "templating": {
-    "list": [
-      {
-        "current": {
-          "selected": false,
-          "text": "ignite",
-          "value": "ignite"
-        },
-        "datasource": {
-          "type": "prometheus",
-          "uid": "prometheus"
-        },
-        "definition": "sys_UpTime",
-        "hide": 0,
-        "includeAll": false,
-        "multi": false,
-        "name": "instance",
-        "options": [],
-        "query": {
-          "query": "sys_UpTime",
-          "refId": "StandardVariableQuery"
-        },
-        "refresh": 1,
-        "regex": "/.*job=\"([^\"]*).*/",
-        "skipUrlSync": false,
-        "sort": 0,
-        "type": "query"
-      }
-    ]
+    "list": []
   },
   "time": {
     "from": "now-1h",
@@ -818,6 +792,6 @@
   "timezone": "",
   "title": "Ignite-Cluster",
   "uid": "Ignite-Cluster",
-  "version": 1,
+  "version": 3,
   "weekStart": ""
 }

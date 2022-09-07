@@ -3,7 +3,10 @@
     "list": [
       {
         "builtIn": 1,
-        "datasource": "-- Grafana --",
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
@@ -20,9 +23,8 @@
   },
   "editable": true,
   "fiscalYearStartMonth": 0,
-  "gnetId": null,
   "graphTooltip": 0,
-  "id": 109,
+  "id": 21,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -88,7 +90,10 @@
         "noDataState": "no_data",
         "notifications": []
       },
-      "datasource": null,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -153,23 +158,36 @@
           "placement": "bottom"
         },
         "tooltip": {
-          "mode": "single"
+          "mode": "single",
+          "sort": "none"
         }
       },
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
           "exemplar": true,
           "expr": "krisk_compute_jobs_Active",
           "interval": "",
-          "legendFormat": "jobs_Active_{{pod_name}}",
+          "legendFormat": "jobs_Active_{{namespace}}_{{pod}}",
+          "range": true,
           "refId": "A"
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
           "exemplar": true,
           "expr": "krisk_compute_jobs_Waiting",
           "hide": false,
           "interval": "",
-          "legendFormat": "jobs_Waiting_{{pod_name}}",
+          "legendFormat": "jobs_Waiting_{{namespace}}_{{pod}}",
+          "range": true,
           "refId": "B"
         }
       ],
@@ -223,7 +241,10 @@
         "noDataState": "no_data",
         "notifications": []
       },
-      "datasource": null,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -289,15 +310,22 @@
           "placement": "bottom"
         },
         "tooltip": {
-          "mode": "single"
+          "mode": "single",
+          "sort": "none"
         }
       },
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
           "exemplar": true,
           "expr": "rate(krisk_compute_jobs_ExecutionTime[2m])",
           "interval": "",
-          "legendFormat": "jobs_ExecutionTime_{{pod_name}}",
+          "legendFormat": "jobs_ExecutionTime_{{namespace}}_{{pod}}",
+          "range": true,
           "refId": "A"
         }
       ],
@@ -374,7 +402,10 @@
         "noDataState": "no_data",
         "notifications": []
       },
-      "datasource": null,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -439,23 +470,36 @@
           "placement": "bottom"
         },
         "tooltip": {
-          "mode": "single"
+          "mode": "single",
+          "sort": "none"
         }
       },
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
           "exemplar": true,
           "expr": "dtm_compute_jobs_Active",
           "interval": "",
-          "legendFormat": "jobs_Active_{{pod_name}}",
+          "legendFormat": "jobs_Active_{{namespace}}_{{pod}}",
+          "range": true,
           "refId": "A"
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
           "exemplar": true,
           "expr": "dtm_compute_jobs_Waiting",
           "hide": false,
           "interval": "",
-          "legendFormat": "jobs_Waiting_{{pod_name}}",
+          "legendFormat": "jobs_Waiting_{{namespace}}_{{pod}}",
+          "range": true,
           "refId": "B"
         }
       ],
@@ -509,7 +553,10 @@
         "noDataState": "no_data",
         "notifications": []
       },
-      "datasource": null,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -575,15 +622,22 @@
           "placement": "bottom"
         },
         "tooltip": {
-          "mode": "single"
+          "mode": "single",
+          "sort": "none"
         }
       },
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
           "exemplar": true,
           "expr": "rate(dtm_compute_jobs_ExecutionTime[5m])",
           "interval": "",
-          "legendFormat": "jobs_ExecutionTime_{{pod_name}}",
+          "legendFormat": "jobs_ExecutionTime_{{namespace}}_{{pod}}",
+          "range": true,
           "refId": "A"
         }
       ],
@@ -600,7 +654,7 @@
     }
   ],
   "refresh": "",
-  "schemaVersion": 31,
+  "schemaVersion": 36,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -614,5 +668,6 @@
   "timezone": "",
   "title": "IgniteComputeJobs",
   "uid": "KriskJobs",
-  "version": 20
+  "version": 2,
+  "weekStart": ""
 }

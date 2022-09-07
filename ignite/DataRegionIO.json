@@ -3,7 +3,10 @@
     "list": [
       {
         "builtIn": 1,
-        "datasource": "-- Grafana --",
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
@@ -20,10 +23,8 @@
   },
   "editable": true,
   "fiscalYearStartMonth": 0,
-  "gnetId": null,
   "graphTooltip": 0,
-  "id": 106,
-  "iteration": 1648109672369,
+  "id": 22,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -89,7 +90,10 @@
         "noDataState": "no_data",
         "notifications": []
       },
-      "datasource": null,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -155,23 +159,36 @@
           "placement": "bottom"
         },
         "tooltip": {
-          "mode": "single"
+          "mode": "single",
+          "sort": "none"
         }
       },
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
           "exemplar": true,
           "expr": "io_dataregion_cacheDataRegion_OffheapUsedSize/io_dataregion_cacheDataRegion_OffHeapSize",
           "interval": "",
-          "legendFormat": "cacheDataRegion_OffheapUsage_{{job}}",
+          "legendFormat": "cacheDataRegion_OffheapUsage_{{namespace}}_{{pod}}",
+          "range": true,
           "refId": "non heap usage"
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
           "exemplar": true,
           "expr": "io_dataregion_cacheDataRegion_TotalAllocatedSize/io_dataregion_cacheDataRegion_MaxSize",
           "hide": false,
           "interval": "",
-          "legendFormat": "cacheDataRegion_Usage",
+          "legendFormat": "cacheDataRegion_Usage_{{namespace}}_{{pod}}",
+          "range": true,
           "refId": "usage"
         }
       ],
@@ -317,7 +334,10 @@
         "noDataState": "no_data",
         "notifications": []
       },
-      "datasource": null,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -387,18 +407,29 @@
           "placement": "bottom"
         },
         "tooltip": {
-          "mode": "single"
+          "mode": "single",
+          "sort": "none"
         }
       },
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
           "exemplar": true,
           "expr": "io_dataregion_cacheDataRegion_TotalAllocatedSize/io_dataregion_cacheDataRegion_MaxSize",
           "interval": "",
-          "legendFormat": "cacheDataRegionUsage_{{job}}",
+          "legendFormat": "cacheDataRegionUsage_{{namespace}}_{{pod}}",
+          "range": true,
           "refId": "cacheDataRegion"
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
           "exemplar": true,
           "expr": "io_dataregion_sysMemPlc_TotalAllocatedSize/io_dataregion_sysMemPlc_MaxSize",
           "hide": false,
@@ -407,35 +438,59 @@
           "refId": "sysMemPlc"
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
           "exemplar": true,
           "expr": "io_dataregion_volatileDsMemPlc_TotalAllocatedSize/io_dataregion_volatileDsMemPlc_MaxSize",
           "hide": false,
           "interval": "",
-          "legendFormat": "volatileDsMemPlc_{{job}}",
+          "legendFormat": "volatileDsMemPlc_{{namespace}}_{{pod}}",
+          "range": true,
           "refId": "volatileDsMemPlc"
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
           "exemplar": true,
           "expr": "io_dataregion_default_TotalAllocatedSize/io_dataregion_default_MaxSize",
           "hide": false,
           "interval": "",
-          "legendFormat": "default_{{job}}",
+          "legendFormat": "default__{{namespace}}_{{pod}}",
+          "range": true,
           "refId": "A"
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
           "exemplar": true,
           "expr": "io_dataregion_TxLog_TotalAllocatedSize/io_dataregion_TxLog_MaxSize",
           "hide": false,
           "interval": "",
-          "legendFormat": "TxLog_{{job}}",
+          "legendFormat": "TxLog__{{namespace}}_{{pod}}",
+          "range": true,
           "refId": "default"
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
           "exemplar": true,
           "expr": "io_dataregion_metastoreMemPlc_TotalAllocatedSize/io_dataregion_metastoreMemPlc_MaxSize",
           "hide": false,
           "interval": "",
-          "legendFormat": "Metastore_{{job}}",
+          "legendFormat": "Metastore__{{namespace}}_{{pod}}",
+          "range": true,
           "refId": "metastore"
         }
       ],
@@ -451,7 +506,10 @@
       "type": "timeseries"
     },
     {
-      "datasource": null,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -517,23 +575,36 @@
           "placement": "bottom"
         },
         "tooltip": {
-          "mode": "single"
+          "mode": "single",
+          "sort": "none"
         }
       },
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
           "exemplar": true,
           "expr": "io_dataregion_cacheDataRegion_OffHeapSize/1000/1000",
           "interval": "",
-          "legendFormat": "OffHeapSize_{{job}}",
+          "legendFormat": "OffHeapSize__{{namespace}}_{{pod}}",
+          "range": true,
           "refId": "offHeapSize"
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
           "exemplar": true,
           "expr": "io_dataregion_cacheDataRegion_OffheapUsedSize/1000/1000",
           "hide": false,
           "interval": "",
-          "legendFormat": "OffheapUsedSize_{{job}}",
+          "legendFormat": "OffheapUsedSize__{{namespace}}_{{pod}}",
+          "range": true,
           "refId": "offHeapUnusedSize"
         }
       ],
@@ -541,7 +612,10 @@
       "type": "timeseries"
     },
     {
-      "datasource": null,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -607,47 +681,78 @@
           "placement": "bottom"
         },
         "tooltip": {
-          "mode": "single"
+          "mode": "single",
+          "sort": "none"
         }
       },
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
           "exemplar": true,
           "expr": "io_dataregion_default_MaxSize",
           "interval": "",
-          "legendFormat": "default_{{job}}",
+          "legendFormat": "default_{{namespace}}_{{pod}}",
+          "range": true,
           "refId": "A"
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
           "exemplar": true,
           "expr": "io_dataregion_TxLog_MaxSize",
           "hide": false,
           "interval": "",
-          "legendFormat": "txLog_{{job}}",
+          "legendFormat": "txLog_{{namespace}}_{{pod}}",
+          "range": true,
           "refId": "B"
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
           "exemplar": true,
           "expr": "io_dataregion_metastoreMemPlc_MaxSize",
           "hide": false,
           "interval": "",
-          "legendFormat": "metastore_{{job}}",
+          "legendFormat": "metastore_{{namespace}}_{{pod}}",
+          "range": true,
           "refId": "C"
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
           "exemplar": true,
           "expr": "io_dataregion_sysMemPlc_MaxSize",
           "hide": false,
           "interval": "",
-          "legendFormat": "sysMemPlc_{{job}}",
+          "legendFormat": "sysMemPlc_{{namespace}}_{{pod}}",
+          "range": true,
           "refId": "D"
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
           "exemplar": true,
           "expr": "io_dataregion_volatileDsMemPlc_MaxSize",
           "hide": false,
           "interval": "",
-          "legendFormat": "volatileDs_{{job}}",
+          "legendFormat": "volatileDs_{{namespace}}_{{pod}}",
+          "range": true,
           "refId": "E"
         }
       ],
@@ -655,39 +760,11 @@
       "type": "timeseries"
     }
   ],
-  "schemaVersion": 31,
+  "schemaVersion": 36,
   "style": "dark",
   "tags": [],
   "templating": {
-    "list": [
-      {
-        "allValue": null,
-        "current": {
-          "selected": false,
-          "text": "ignite-3",
-          "value": "ignite-3"
-        },
-        "datasource": null,
-        "definition": "sys_UpTime",
-        "description": null,
-        "error": null,
-        "hide": 0,
-        "includeAll": false,
-        "label": null,
-        "multi": false,
-        "name": "instance",
-        "options": [],
-        "query": {
-          "query": "sys_UpTime",
-          "refId": "StandardVariableQuery"
-        },
-        "refresh": 1,
-        "regex": "/.*job=\"([^\"]*).*/",
-        "skipUrlSync": false,
-        "sort": 0,
-        "type": "query"
-      }
-    ]
+    "list": []
   },
   "time": {
     "from": "now-6h",
@@ -697,5 +774,6 @@
   "timezone": "",
   "title": "Ignite-DataRegionIO",
   "uid": "Ignite-DataRegionIO",
-  "version": 21
+  "version": 2,
+  "weekStart": ""
 }

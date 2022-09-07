@@ -1,35 +1,11 @@
 {
   "annotations": {
-    "list": [
-      {
-        "builtIn": 1,
-        "datasource": "-- Grafana --",
-        "enable": true,
-        "hide": true,
-        "iconColor": "rgba(0, 211, 255, 1)",
-        "name": "Annotations & Alerts",
-        "target": {
-          "limit": 100,
-          "matchAny": false,
-          "tags": [],
-          "type": "dashboard"
-        },
-        "type": "dashboard"
-      },
-      {
-        "datasource": null,
-        "enable": true,
-        "iconColor": "red",
-        "name": "New annotation"
-      }
-    ]
+    "list": []
   },
   "editable": true,
   "fiscalYearStartMonth": 0,
-  "gnetId": null,
   "graphTooltip": 0,
-  "id": 107,
-  "iteration": 1648109670066,
+  "id": 19,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -118,7 +94,10 @@
         "noDataState": "no_data",
         "notifications": []
       },
-      "datasource": null,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -183,31 +162,50 @@
           "placement": "bottom"
         },
         "tooltip": {
-          "mode": "single"
+          "mode": "single",
+          "sort": "none"
         }
       },
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
           "exemplar": true,
           "expr": "krisk_threadPools_GridExecutionExecutor_QueueSize",
           "interval": "",
-          "legendFormat": "Krisk_GridExecutionExecutor_{{pod_name}}",
+          "legendFormat": "Krisk_GridExecutionExecutor_{{namespace}}_{{pod}}",
+          "range": true,
           "refId": "krisk_gridexecution"
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
           "exemplar": true,
           "expr": "knotify_threadPools_GridExecutionExecutor_QueueSize",
           "hide": false,
           "interval": "",
-          "legendFormat": "Krisk_GridExecutionExecutor_{{pod_name}}",
+          "legendFormat": "Krisk_GridExecutionExecutor_{{namespace}}_{{pod}}",
+          "range": true,
           "refId": "B"
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
           "exemplar": true,
           "expr": "dtm_threadPools_GridExecutionExecutor_QueueSize",
           "hide": false,
           "interval": "",
-          "legendFormat": "Krisk_GridExecutionExecutor_{{pod_name}}",
+          "legendFormat": "Krisk_GridExecutionExecutor_{{namespace}}_{{pod}}",
+          "range": true,
           "refId": "A"
         }
       ],
@@ -261,7 +259,10 @@
         "noDataState": "no_data",
         "notifications": []
       },
-      "datasource": null,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -326,32 +327,51 @@
           "placement": "bottom"
         },
         "tooltip": {
-          "mode": "single"
+          "mode": "single",
+          "sort": "none"
         }
       },
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
           "exemplar": true,
           "expr": "threadPools_GridQueryExecutor_PoolSize",
           "hide": false,
           "interval": "",
-          "legendFormat": "GridQueryExecutor_PoolSize_{{job}}",
+          "legendFormat": "GridQueryExecutor_PoolSize_{{namespace}}_{{pod}}",
+          "range": true,
           "refId": "active"
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
           "exemplar": true,
           "expr": "threadPools_GridQueryExecutor_MaximumPoolSize",
           "hide": false,
           "interval": "",
-          "legendFormat": "GridQueryExecutor_MaximumPoolSize_{{job}}",
+          "legendFormat": "GridQueryExecutor_MaximumPoolSize_{{namespace}}_{{pod}}",
+          "range": true,
           "refId": "max"
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
           "exemplar": true,
           "expr": "threadPools_GridQueryExecutor_QueueSize",
           "hide": false,
           "interval": "",
-          "legendFormat": "GridQueryExecutor_QueueSize_{{job}}",
+          "legendFormat": "GridQueryExecutor_QueueSize_{{namespace}}_{{pod}}",
+          "range": true,
           "refId": "queue"
         }
       ],
@@ -428,7 +448,10 @@
         "noDataState": "no_data",
         "notifications": []
       },
-      "datasource": null,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -493,23 +516,36 @@
           "placement": "bottom"
         },
         "tooltip": {
-          "mode": "single"
+          "mode": "single",
+          "sort": "none"
         }
       },
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
           "exemplar": true,
           "expr": "threadPools_GridDataStreamExecutor_ActiveCount",
           "interval": "",
-          "legendFormat": "DataStrean_ActiveCount_{{job}}",
+          "legendFormat": "DataStrean_ActiveCount_{{namespace}}_{{pod}}",
+          "range": true,
           "refId": "active"
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
           "exemplar": true,
           "expr": "threadPools_GridDataStreamExecutor_TotalQueueSize",
           "hide": false,
           "interval": "",
-          "legendFormat": "DataStrean_TotalQueueSize_{{job}}",
+          "legendFormat": "DataStrean_TotalQueueSize_{{namespace}}_{{pod}}",
+          "range": true,
           "refId": "total"
         }
       ],
@@ -563,7 +599,10 @@
         "noDataState": "no_data",
         "notifications": []
       },
-      "datasource": null,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -628,32 +667,51 @@
           "placement": "bottom"
         },
         "tooltip": {
-          "mode": "single"
+          "mode": "single",
+          "sort": "none"
         }
       },
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
           "exemplar": true,
           "expr": "threadPools_GridSystemExecutor_PoolSize",
           "hide": false,
           "interval": "",
-          "legendFormat": "GridSystemExecutor_PoolSize_{{job}}",
+          "legendFormat": "GridSystemExecutor_PoolSize_{{namespace}}_{{pod}}",
+          "range": true,
           "refId": "B"
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
           "exemplar": true,
           "expr": "threadPools_GridSystemExecutor_MaximumPoolSize",
           "hide": false,
           "interval": "",
-          "legendFormat": "GridSystemExecutor_MaximumPoolSize_{{job}}",
+          "legendFormat": "GridSystemExecutor_MaximumPoolSize_{{namespace}}_{{pod}}",
+          "range": true,
           "refId": "A"
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
           "exemplar": true,
           "expr": "threadPools_GridSystemExecutor_QueueSize",
           "hide": false,
           "interval": "",
-          "legendFormat": "GridSystemExecutor_QueueSize_{{job}}",
+          "legendFormat": "GridSystemExecutor_QueueSize_{{namespace}}_{{pod}}",
+          "range": true,
           "refId": "queue"
         }
       ],
@@ -707,7 +765,10 @@
         "noDataState": "no_data",
         "notifications": []
       },
-      "datasource": null,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -772,11 +833,16 @@
           "placement": "bottom"
         },
         "tooltip": {
-          "mode": "single"
+          "mode": "single",
+          "sort": "none"
         }
       },
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
           "exemplar": true,
           "expr": "threadPools_GridCallbackExecutor_PoolSize",
           "hide": false,
@@ -785,19 +851,31 @@
           "refId": "B"
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
           "exemplar": true,
           "expr": "threadPools_GridCallbackExecutor_MaximumPoolSize",
           "hide": false,
           "interval": "",
-          "legendFormat": "GridCallbackExecutor_MaximumPoolSize_{{job}}",
+          "legendFormat": "GridCallbackExecutor_MaximumPoolSize_{{namespace}}_{{pod}}",
+          "range": true,
           "refId": "A"
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
           "exemplar": true,
           "expr": "threadPools_GridCallbackExecutor_QueueSize",
           "hide": false,
           "interval": "",
-          "legendFormat": "GridCallbackExecutor_QueueSize_{{job}}",
+          "legendFormat": "GridCallbackExecutor_QueueSize_{{namespace}}_{{pod}}",
+          "range": true,
           "refId": "queue"
         }
       ],
@@ -851,7 +929,10 @@
         "noDataState": "no_data",
         "notifications": []
       },
-      "datasource": null,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -916,32 +997,51 @@
           "placement": "bottom"
         },
         "tooltip": {
-          "mode": "single"
+          "mode": "single",
+          "sort": "none"
         }
       },
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
           "exemplar": true,
           "expr": "threadPools_GridExecutionExecutor_PoolSize",
           "hide": false,
           "interval": "",
-          "legendFormat": "GridExecutionExecutor_PoolSize_{{job}}",
+          "legendFormat": "GridExecutionExecutor_PoolSize_{{namespace}}_{{pod}}",
+          "range": true,
           "refId": "B"
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
           "exemplar": true,
           "expr": "threadPools_GridExecutionExecutor_MaximumPoolSize",
           "hide": false,
           "interval": "",
-          "legendFormat": "GridExecutionExecutor_MaximumPoolSize_{{job}}",
+          "legendFormat": "GridExecutionExecutor_MaximumPoolSize_{{namespace}}_{{pod}}",
+          "range": true,
           "refId": "A"
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
           "exemplar": true,
           "expr": "threadPools_GridExecutionExecutor_QueueSize",
           "hide": false,
           "interval": "",
-          "legendFormat": "GridExecutionExecutor_QueueSize_{{job}}",
+          "legendFormat": "GridExecutionExecutor_QueueSize_{{namespace}}_{{pod}}",
+          "range": true,
           "refId": "queue"
         }
       ],
@@ -958,39 +1058,11 @@
     }
   ],
   "refresh": "",
-  "schemaVersion": 31,
+  "schemaVersion": 36,
   "style": "dark",
   "tags": [],
   "templating": {
-    "list": [
-      {
-        "allValue": null,
-        "current": {
-          "selected": false,
-          "text": "ignite-2",
-          "value": "ignite-2"
-        },
-        "datasource": null,
-        "definition": "sys_UpTime",
-        "description": null,
-        "error": null,
-        "hide": 0,
-        "includeAll": false,
-        "label": null,
-        "multi": false,
-        "name": "instance",
-        "options": [],
-        "query": {
-          "query": "sys_UpTime",
-          "refId": "StandardVariableQuery"
-        },
-        "refresh": 1,
-        "regex": "/.*job=\"([^\"]*).*/",
-        "skipUrlSync": false,
-        "sort": 0,
-        "type": "query"
-      }
-    ]
+    "list": []
   },
   "time": {
     "from": "now-6h",
@@ -1000,5 +1072,6 @@
   "timezone": "",
   "title": "Ignite-ThreadPool",
   "uid": "Ignite-ThreadPool",
-  "version": 15
+  "version": 2,
+  "weekStart": ""
 }
