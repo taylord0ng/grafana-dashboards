@@ -124,10 +124,12 @@
               "mode": "none"
             },
             "thresholdsStyle": {
-              "mode": "off"
+              "mode": "line"
             }
           },
           "mappings": [],
+          "max": 1,
+          "min": 0,
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -137,7 +139,7 @@
               },
               {
                 "color": "red",
-                "value": 80
+                "value": 0.8
               }
             ]
           },
@@ -151,7 +153,7 @@
         "x": 0,
         "y": 0
       },
-      "id": 10,
+      "id": 11,
       "options": {
         "legend": {
           "calcs": [],
@@ -201,6 +203,7 @@
         }
       ],
       "title": "cacheDataRegion OffHeap Usage",
+      "transparent": true,
       "type": "timeseries"
     },
     {
@@ -368,10 +371,12 @@
               "mode": "none"
             },
             "thresholdsStyle": {
-              "mode": "off"
+              "mode": "line"
             }
           },
           "mappings": [],
+          "max": 1,
+          "min": 0,
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -380,12 +385,8 @@
                 "value": null
               },
               {
-                "color": "#EAB839",
-                "value": 0.5
-              },
-              {
                 "color": "red",
-                "value": 0.7
+                "value": 0.8
               }
             ]
           },
@@ -399,7 +400,7 @@
         "x": 12,
         "y": 0
       },
-      "id": 4,
+      "id": 12,
       "options": {
         "legend": {
           "calcs": [],
@@ -503,6 +504,7 @@
         }
       ],
       "title": "Cache Memory Usage",
+      "transparent": true,
       "type": "timeseries"
     },
     {
@@ -567,7 +569,7 @@
         "x": 0,
         "y": 8
       },
-      "id": 2,
+      "id": 13,
       "options": {
         "legend": {
           "calcs": [],
@@ -609,6 +611,7 @@
         }
       ],
       "title": "CacheData Region OffHeapSize(MB)",
+      "transparent": true,
       "type": "timeseries"
     },
     {
@@ -673,7 +676,7 @@
         "x": 12,
         "y": 8
       },
-      "id": 12,
+      "id": 14,
       "options": {
         "legend": {
           "calcs": [],
@@ -757,6 +760,7 @@
         }
       ],
       "title": "Memory Region Size",
+      "transparent": true,
       "type": "timeseries"
     }
   ],
@@ -774,6 +778,6 @@
   "timezone": "",
   "title": "Ignite-DataRegionIO",
   "uid": "Ignite-DataRegionIO",
-  "version": 2,
+  "version": 7,
   "weekStart": ""
 }

@@ -150,7 +150,7 @@
         "x": 0,
         "y": 0
       },
-      "id": 2,
+      "id": 11,
       "options": {
         "legend": {
           "calcs": [],
@@ -200,6 +200,7 @@
         }
       ],
       "title": "KriskJobs",
+      "transparent": true,
       "type": "timeseries"
     },
     {
@@ -302,7 +303,7 @@
         "x": 12,
         "y": 0
       },
-      "id": 4,
+      "id": 12,
       "options": {
         "legend": {
           "calcs": [],
@@ -338,6 +339,7 @@
         }
       ],
       "title": "kriskJobTime",
+      "transparent": true,
       "type": "timeseries"
     },
     {
@@ -462,7 +464,7 @@
         "x": 0,
         "y": 9
       },
-      "id": 7,
+      "id": 13,
       "options": {
         "legend": {
           "calcs": [],
@@ -512,6 +514,7 @@
         }
       ],
       "title": "DtmJobs",
+      "transparent": true,
       "type": "timeseries"
     },
     {
@@ -614,7 +617,7 @@
         "x": 12,
         "y": 9
       },
-      "id": 8,
+      "id": 14,
       "options": {
         "legend": {
           "calcs": [],
@@ -650,6 +653,7 @@
         }
       ],
       "title": "DtmJobTime",
+      "transparent": true,
       "type": "timeseries"
     }
   ],
@@ -668,6 +672,6 @@
   "timezone": "",
   "title": "IgniteComputeJobs",
   "uid": "KriskJobs",
-  "version": 2,
+  "version": 5,
   "weekStart": ""
 }

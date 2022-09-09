@@ -1,6 +1,25 @@
 {
   "annotations": {
-    "list": []
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
   },
   "editable": true,
   "fiscalYearStartMonth": 0,
@@ -154,7 +173,7 @@
         "x": 0,
         "y": 0
       },
-      "id": 8,
+      "id": 11,
       "options": {
         "legend": {
           "calcs": [],
@@ -218,6 +237,7 @@
         }
       ],
       "title": "application threadPools_GridExecutionExecutor",
+      "transparent": true,
       "type": "timeseries"
     },
     {
@@ -319,7 +339,7 @@
         "x": 12,
         "y": 0
       },
-      "id": 3,
+      "id": 12,
       "options": {
         "legend": {
           "calcs": [],
@@ -384,6 +404,7 @@
         }
       ],
       "title": "GridQueryExecutor",
+      "transparent": true,
       "type": "timeseries"
     },
     {
@@ -508,7 +529,7 @@
         "x": 0,
         "y": 8
       },
-      "id": 2,
+      "id": 13,
       "options": {
         "legend": {
           "calcs": [],
@@ -558,6 +579,7 @@
         }
       ],
       "title": "DataStreamExecutor",
+      "transparent": true,
       "type": "timeseries"
     },
     {
@@ -659,7 +681,7 @@
         "x": 12,
         "y": 8
       },
-      "id": 5,
+      "id": 14,
       "options": {
         "legend": {
           "calcs": [],
@@ -724,6 +746,7 @@
         }
       ],
       "title": "GridSystemExecutor",
+      "transparent": true,
       "type": "timeseries"
     },
     {
@@ -825,7 +848,7 @@
         "x": 0,
         "y": 16
       },
-      "id": 6,
+      "id": 15,
       "options": {
         "legend": {
           "calcs": [],
@@ -888,6 +911,7 @@
         }
       ],
       "title": "GridCallbackExecutor",
+      "transparent": true,
       "type": "timeseries"
     },
     {
@@ -989,7 +1013,7 @@
         "x": 12,
         "y": 16
       },
-      "id": 4,
+      "id": 16,
       "options": {
         "legend": {
           "calcs": [],
@@ -1054,6 +1078,7 @@
         }
       ],
       "title": "GridExecutionExecutor",
+      "transparent": true,
       "type": "timeseries"
     }
   ],
@@ -1072,6 +1097,6 @@
   "timezone": "",
   "title": "Ignite-ThreadPool",
   "uid": "Ignite-ThreadPool",
-  "version": 2,
+  "version": 11,
   "weekStart": ""
 }

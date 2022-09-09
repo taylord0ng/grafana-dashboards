@@ -91,7 +91,7 @@
         "x": 0,
         "y": 0
       },
-      "id": 4,
+      "id": 10,
       "options": {
         "legend": {
           "calcs": [],
@@ -119,6 +119,7 @@
         }
       ],
       "title": "StorageSize(MB)",
+      "transparent": true,
       "type": "timeseries"
     },
     {
@@ -183,7 +184,7 @@
         "x": 12,
         "y": 0
       },
-      "id": 6,
+      "id": 11,
       "options": {
         "legend": {
           "calcs": [],
@@ -211,6 +212,7 @@
         }
       ],
       "title": "StorageWalTotalSize(MB)",
+      "transparent": true,
       "type": "timeseries"
     },
     {
@@ -274,7 +276,7 @@
         "x": 0,
         "y": 8
       },
-      "id": 8,
+      "id": 13,
       "options": {
         "legend": {
           "calcs": [],
@@ -302,6 +304,7 @@
         }
       ],
       "title": "StorageWalWritingRate(MB)",
+      "transparent": true,
       "type": "timeseries"
     },
     {
@@ -372,7 +375,7 @@
         "x": 12,
         "y": 8
       },
-      "id": 2,
+      "id": 14,
       "options": {
         "bucketOffset": 0,
         "legend": {
@@ -426,6 +429,7 @@
       ],
       "title": "StorageCheckpointFsyncHistogram",
       "transformations": [],
+      "transparent": true,
       "type": "histogram"
     }
   ],
@@ -443,6 +447,6 @@
   "timezone": "",
   "title": "Ignite-Storage",
   "uid": "Ignite-Storage",
-  "version": 2,
+  "version": 4,
   "weekStart": ""
 }

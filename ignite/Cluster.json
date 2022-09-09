@@ -101,10 +101,12 @@
               "mode": "none"
             },
             "thresholdsStyle": {
-              "mode": "off"
+              "mode": "line"
             }
           },
           "mappings": [],
+          "max": 1,
+          "min": 0,
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -114,7 +116,7 @@
               },
               {
                 "color": "red",
-                "value": 80
+                "value": 0.8
               }
             ]
           },
@@ -128,7 +130,7 @@
         "x": 0,
         "y": 0
       },
-      "id": 10,
+      "id": 11,
       "options": {
         "legend": {
           "calcs": [],
@@ -164,6 +166,7 @@
         }
       ],
       "title": "Sys Heap Usage",
+      "transparent": true,
       "type": "timeseries"
     },
     {
@@ -269,7 +272,7 @@
         "x": 12,
         "y": 0
       },
-      "id": 4,
+      "id": 12,
       "options": {
         "legend": {
           "calcs": [],
@@ -305,6 +308,7 @@
         }
       ],
       "title": "Sys CpuLoad",
+      "transparent": true,
       "type": "timeseries"
     },
     {
@@ -456,7 +460,7 @@
         "x": 0,
         "y": 8
       },
-      "id": 2,
+      "id": 13,
       "options": {
         "legend": {
           "calcs": [],
@@ -528,6 +532,7 @@
         }
       ],
       "title": "Baseline nodes",
+      "transparent": true,
       "type": "timeseries"
     },
     {
@@ -633,7 +638,7 @@
         "x": 12,
         "y": 8
       },
-      "id": 6,
+      "id": 14,
       "options": {
         "legend": {
           "calcs": [],
@@ -669,6 +674,7 @@
         }
       ],
       "title": "sys_ThreadCount",
+      "transparent": true,
       "type": "timeseries"
     },
     {
@@ -732,7 +738,7 @@
         "x": 0,
         "y": 16
       },
-      "id": 8,
+      "id": 15,
       "options": {
         "legend": {
           "calcs": [],
@@ -774,6 +780,7 @@
         }
       ],
       "title": "sys_memory_heap(MB)",
+      "transparent": true,
       "type": "timeseries"
     }
   ],
@@ -792,6 +799,6 @@
   "timezone": "",
   "title": "Ignite-Cluster",
   "uid": "Ignite-Cluster",
-  "version": 3,
+  "version": 7,
   "weekStart": ""
 }
