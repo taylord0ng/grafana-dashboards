@@ -126,7 +126,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "9.0.5",
+      "pluginVersion": "9.0.8",
       "targets": [
         {
           "datasource": {
@@ -213,7 +213,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.0.5",
+      "pluginVersion": "9.0.8",
       "targets": [
         {
           "datasource": {
@@ -682,7 +682,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "9.0.5",
+      "pluginVersion": "9.0.8",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1811,7 +1811,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "(sum by (pod, interface) (increase(dubbo_request_success_total{application='dtm'}[2m])/120))/(sum by (pod, interface) (increase(dubbo_request_total{application='dtm'}[2m])/120))",
+          "expr": "(sum by (namespace,pod, interface) (increase(dubbo_request_success_total{application='dtm'}[2m])/120))/(sum by (namespace,pod, interface) (increase(dubbo_request_total{application='dtm'}[2m])/120))",
           "instant": false,
           "interval": "",
           "legendFormat": "{{pod}}_{{interface}}",
@@ -1957,7 +1957,7 @@
             "uid": "prometheus"
           },
           "exemplar": true,
-          "expr": "sum by (pod, interface, method) (dubbo_request_latency_seconds{application='dtm', quantile='0.9'}*1000)",
+          "expr": "sum by (namespace,pod, interface, method) (dubbo_request_latency_seconds{application='dtm', quantile='0.9'}*1000)",
           "interval": "",
           "legendFormat": "{{pod}}_{{interface}}.{{method}}",
           "refId": "A"
@@ -2093,7 +2093,7 @@
             "uid": "prometheus"
           },
           "exemplar": true,
-          "expr": "sum by (pod, interface) (increase(dubbo_request_concurrent_total{application='dtm'}[2m])/120)",
+          "expr": "sum by (namespace,pod, interface) (increase(dubbo_request_concurrent_total{application='dtm'}[2m])/120)",
           "interval": "",
           "legendFormat": "{{pod}}_{{interface}}",
           "refId": "A"
@@ -2266,7 +2266,7 @@
             "uid": "prometheus"
           },
           "exemplar": true,
-          "expr": "sum by (pod, uri) (rate(http_server_requests_seconds_count{application='dtm'}[2m]))",
+          "expr": "sum by (namespace,pod, uri) (rate(http_server_requests_seconds_count{application='dtm'}[2m]))",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -2419,7 +2419,7 @@
             "uid": "prometheus"
           },
           "exemplar": true,
-          "expr": "sum by (pod, uri) (rate(http_server_requests_seconds_sum{application=\"dtm\", status!~\"5..\"}[2m]))/sum by (pod, uri) (rate(http_server_requests_seconds_count{application=\"dtm\", status!~\"5..\"}[2m]))",
+          "expr": "sum by (namespace,pod, uri) (rate(http_server_requests_seconds_sum{application=\"dtm\", status!~\"5..\"}[2m]))/sum by (namespace,pod, uri) (rate(http_server_requests_seconds_count{application=\"dtm\", status!~\"5..\"}[2m]))",
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -2433,7 +2433,7 @@
             "uid": "prometheus"
           },
           "exemplar": true,
-          "expr": "max by (pod, uri) (http_server_requests_seconds_max{application=\"dtm\", status!~\"5..\"})",
+          "expr": "max by (namespace,pod, uri) (http_server_requests_seconds_max{application=\"dtm\", status!~\"5..\"})",
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -2621,7 +2621,7 @@
             "uid": "prometheus"
           },
           "exemplar": true,
-          "expr": "sum by (pod, uri) (rate(http_server_requests_seconds_count{application=\"dtm\", status=~\"5..\"}[2m]))",
+          "expr": "sum by (namespace,pod, uri) (rate(http_server_requests_seconds_count{application=\"dtm\", status=~\"5..\"}[2m]))",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -2789,7 +2789,7 @@
             "uid": "prometheus"
           },
           "exemplar": true,
-          "expr": "avg by (pod, action, cause) (rate(jvm_gc_pause_seconds_count{application=\"dtm\"}[2m]))",
+          "expr": "avg by (namespace,pod, action, cause) (rate(jvm_gc_pause_seconds_count{application=\"dtm\"}[2m]))",
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -2803,7 +2803,7 @@
             "uid": "prometheus"
           },
           "exemplar": true,
-          "expr": "avg by (pod, cause) (rate(jvm_gc_pause_seconds_count{application=\"dtm\", action=\"end of major GC\"}[2m]))",
+          "expr": "avg by (namespace,pod, cause) (rate(jvm_gc_pause_seconds_count{application=\"dtm\", action=\"end of major GC\"}[2m]))",
           "hide": false,
           "interval": "",
           "legendFormat": "MajorGC_{{pod}}",
@@ -2944,7 +2944,7 @@
             "uid": "prometheus"
           },
           "exemplar": true,
-          "expr": "avg by (pod, action, cause) (rate(jvm_gc_pause_seconds_sum{application=\"dtm\"}[2m])/rate(jvm_gc_pause_seconds_count{application=\"dtm\"}[2m]))",
+          "expr": "avg by (namespace,pod, action, cause) (rate(jvm_gc_pause_seconds_sum{application=\"dtm\"}[2m])/rate(jvm_gc_pause_seconds_count{application=\"dtm\"}[2m]))",
           "format": "time_series",
           "hide": false,
           "instant": false,
@@ -2959,7 +2959,7 @@
             "uid": "prometheus"
           },
           "exemplar": true,
-          "expr": "avg by (pod, action, cause) (jvm_gc_pause_seconds_max{application=\"dtm\"})",
+          "expr": "avg by (namespace,pod, action, cause) (jvm_gc_pause_seconds_max{application=\"dtm\"})",
           "format": "time_series",
           "hide": false,
           "instant": false,
@@ -3287,7 +3287,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "sum(irate(container_cpu_usage_seconds_total{container=\"dtm\"}[5m])*100)by(pod)/sum(container_spec_cpu_quota{container=\"dtm\"}/container_spec_cpu_period{container=\"dtm\"})by(pod)",
+          "expr": "sum(irate(container_cpu_usage_seconds_total{container=\"dtm\"}[5m])*100)by(namespace,pod)/sum(container_spec_cpu_quota{container=\"dtm\"}/container_spec_cpu_period{container=\"dtm\"})by(namespace,pod)",
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -3433,7 +3433,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "sum(container_cpu_load_average_10s{container=\"dtm\"})by(pod)/sum(container_spec_cpu_quota{container=\"dtm\"}/container_spec_cpu_period{container=\"dtm\"})by(pod)/1000",
+          "expr": "sum(container_cpu_load_average_10s{container=\"dtm\"})by(namespace,pod)/sum(container_spec_cpu_quota{container=\"dtm\"}/container_spec_cpu_period{container=\"dtm\"})by(namespace,pod)/1000",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -3646,13 +3646,15 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
+          "editorMode": "code",
           "exemplar": true,
           "expr": "increase(log4j2_events_total{application='dtm', level =~'error|warn'}[2m])",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
-          "legendFormat": "{{pod}}_{{level}}",
+          "legendFormat": "{{namespace}}_{{pod}}_{{level}}",
           "metric": "",
+          "range": true,
           "refId": "A",
           "step": 1200
         }
@@ -4113,8 +4115,9 @@
             "uid": "prometheus"
           },
           "exemplar": true,
-          "expr": "sum by (pod) (jvm_threads_live_threads{application=\"dtm\"})",
+          "expr": "sum by (namespace,pod) (jvm_threads_live_threads{application=\"dtm\"})",
           "format": "time_series",
+          "hide": false,
           "interval": "",
           "intervalFactor": 2,
           "legendFormat": "live_{{pod}}",
@@ -4128,8 +4131,9 @@
             "uid": "prometheus"
           },
           "exemplar": true,
-          "expr": " sum by (pod) (jvm_threads_daemon_threads{application=\"dtm\"})",
+          "expr": " sum by (namespace,pod) (jvm_threads_daemon_threads{application=\"dtm\"})",
           "format": "time_series",
+          "hide": true,
           "interval": "",
           "intervalFactor": 2,
           "legendFormat": "daemon_{{pod}}",
@@ -4143,8 +4147,9 @@
             "uid": "prometheus"
           },
           "exemplar": true,
-          "expr": " sum by (pod) (jvm_threads_peak_threads{application=\"dtm\"})",
+          "expr": " sum by (namespace,pod) (jvm_threads_peak_threads{application=\"dtm\"})",
           "format": "time_series",
+          "hide": true,
           "interval": "",
           "intervalFactor": 2,
           "legendFormat": "peak_{{pod}}",
@@ -4157,8 +4162,9 @@
             "uid": "prometheus"
           },
           "exemplar": true,
-          "expr": "sum by (pod) (jvm_threads_states_threads{application=\"dtm\"})",
+          "expr": "sum by (namespace,pod) (jvm_threads_states_threads{application=\"dtm\"})",
           "format": "time_series",
+          "hide": true,
           "interval": "",
           "intervalFactor": 2,
           "legendFormat": "process_{{pod}}",
@@ -4319,10 +4325,12 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
+          "editorMode": "code",
           "exemplar": true,
-          "expr": "sum by (container) (increase(kube_pod_container_status_restarts_total{container='dtm'}[10m]))",
+          "expr": "sum by (container,pod,namespace) (increase(kube_pod_container_status_restarts_total{container='dtm'}[10m]))",
           "interval": "",
-          "legendFormat": "restart {{container}}",
+          "legendFormat": "restart_{{namespace}}_{{pod}}",
+          "range": true,
           "refId": "restart"
         },
         {
@@ -4330,11 +4338,13 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
+          "editorMode": "code",
           "exemplar": true,
-          "expr": "sum by (container) (increase(kube_pod_container_status_last_terminated_reason{container='dtm', reason=\"OOMKilled\"}[10m]))",
+          "expr": "sum by (container,pod,namespace) (increase(kube_pod_container_status_last_terminated_reason{container='dtm', reason=\"OOMKilled\"}[10m]))",
           "hide": false,
           "interval": "",
-          "legendFormat": "OOM {{container}}",
+          "legendFormat": "OOM_{{namespace}}_{{pod}}",
+          "range": true,
           "refId": "oom"
         }
       ],
@@ -5194,6 +5204,6 @@
   "timezone": "browser",
   "title": "dtm",
   "uid": "dtm",
-  "version": 42,
+  "version": 73,
   "weekStart": ""
 }
