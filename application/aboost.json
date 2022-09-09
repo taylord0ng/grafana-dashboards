@@ -134,7 +134,7 @@
             "uid": "prometheus"
           },
           "exemplar": true,
-          "expr": "process_uptime_seconds{application=\"kpay\",namespace=\"$namespace\",pod=\"$pod\"}",
+          "expr": "process_uptime_seconds{application=\"aboost\",namespace=\"$namespace\",pod=\"$pod\"}",
           "format": "time_series",
           "instant": false,
           "interval": "",
@@ -221,7 +221,7 @@
             "uid": "prometheus"
           },
           "exemplar": true,
-          "expr": "process_start_time_seconds{application='kpay', pod='$pod'}*1000",
+          "expr": "process_start_time_seconds{application='aboost', pod='$pod'}*1000",
           "format": "time_series",
           "instant": false,
           "interval": "",
@@ -360,7 +360,7 @@
             "uid": "prometheus"
           },
           "exemplar": true,
-          "expr": "container_cpu_load_average_10s{container='kpay', pod='$pod'}",
+          "expr": "container_cpu_load_average_10s{container='aboost', pod='$pod'}",
           "interval": "",
           "legendFormat": "cpu_load_{{pod}}",
           "refId": "A"
@@ -476,7 +476,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "sum(jvm_memory_used_bytes{area=\"heap\",application=\"kpay\",pod=\"$pod\",namespace=\"$namespace\"})/sum(jvm_memory_max_bytes{area=\"heap\",application=\"kpay\",pod=\"$pod\",namespace=\"$namespace\"})",
+          "expr": "sum(jvm_memory_used_bytes{area=\"heap\",application=\"aboost\",pod=\"$pod\",namespace=\"$namespace\"})/sum(jvm_memory_max_bytes{area=\"heap\",application=\"aboost\",pod=\"$pod\",namespace=\"$namespace\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -878,7 +878,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "sum by (pod) (jvm_memory_used_bytes{application=\"kpay\", area=\"heap\",pod=\"$pod\",namespace=\"$namespace\"})",
+          "expr": "sum by (pod) (jvm_memory_used_bytes{application=\"aboost\", area=\"heap\",pod=\"$pod\",namespace=\"$namespace\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -895,7 +895,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "sum by (pod) (jvm_memory_committed_bytes{application=\"kpay\", area=\"heap\",pod=\"$pod\",namespace=\"$namespace\"})",
+          "expr": "sum by (pod) (jvm_memory_committed_bytes{application=\"aboost\", area=\"heap\",pod=\"$pod\",namespace=\"$namespace\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -911,7 +911,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "sum by (pod) (jvm_memory_max_bytes{application=\"kpay\", area=\"heap\",pod=\"$pod\",namespace=\"$namespace\"})",
+          "expr": "sum by (pod) (jvm_memory_max_bytes{application=\"aboost\", area=\"heap\",pod=\"$pod\",namespace=\"$namespace\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -1013,7 +1013,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "sum by (pod)(jvm_memory_used_bytes{application='kpay', area=\"nonheap\",pod=\"$pod\",namespace=\"$namespace\"})",
+          "expr": "sum by (pod)(jvm_memory_used_bytes{application='aboost', area=\"nonheap\",pod=\"$pod\",namespace=\"$namespace\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -1030,7 +1030,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "sum by (pod) (jvm_memory_committed_bytes{application='kpay', area=\"nonheap\",pod=\"$pod\",namespace=\"$namespace\"})",
+          "expr": "sum by (pod) (jvm_memory_committed_bytes{application='aboost', area=\"nonheap\",pod=\"$pod\",namespace=\"$namespace\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -1046,7 +1046,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "sum by (pod) (jvm_memory_max_bytes{application='kpay', area=\"nonheap\",pod=\"$pod\",namespace=\"$namespace\"})",
+          "expr": "sum by (pod) (jvm_memory_max_bytes{application='aboost', area=\"nonheap\",pod=\"$pod\",namespace=\"$namespace\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -1148,7 +1148,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "sum by (pod) (jvm_memory_used_bytes{application='kpay',pod=\"$pod\",namespace=\"$namespace\"})",
+          "expr": "sum by (pod) (jvm_memory_used_bytes{application='aboost',pod=\"$pod\",namespace=\"$namespace\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -1165,7 +1165,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "sum by (pod) (jvm_memory_committed_bytes{application='kpay',pod=\"$pod\",namespace=\"$namespace\"})",
+          "expr": "sum by (pod) (jvm_memory_committed_bytes{application='aboost',pod=\"$pod\",namespace=\"$namespace\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -1181,7 +1181,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "sum by (pod) (jvm_memory_max_bytes{application='kpay',pod=\"$pod\",namespace=\"$namespace\"})",
+          "expr": "sum by (pod) (jvm_memory_max_bytes{application='aboost',pod=\"$pod\",namespace=\"$namespace\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -1198,7 +1198,7 @@
     {
       "alert": {
         "alertRuleTags": {
-          "application": "kpay",
+          "application": "aboost",
           "env": "beta"
         },
         "conditions": [
@@ -1319,7 +1319,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "(sum by (pod,namespace) (jvm_memory_used_bytes{application='kpay', area='heap'})* 100) /sum by (pod,namespace) (jvm_memory_max_bytes{application='kpay', area='heap'}) ",
+          "expr": "(sum by (pod,namespace) (jvm_memory_used_bytes{application='aboost', area='heap'})* 100) /sum by (pod,namespace) (jvm_memory_max_bytes{application='aboost', area='heap'}) ",
           "interval": "",
           "legendFormat": "heap_usage_{{pod}}({{namespace}})",
           "range": true,
@@ -1341,7 +1341,7 @@
     {
       "alert": {
         "alertRuleTags": {
-          "application": "kpay",
+          "application": "aboost",
           "env": "beta"
         },
         "conditions": [
@@ -1462,7 +1462,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "(sum by (pod,namespace) (jvm_memory_used_bytes{application='kpay', area='nonheap'})* 100) /sum by (pod,namespace) (jvm_memory_max_bytes{application='kpay', area='nonheap'}) ",
+          "expr": "(sum by (pod,namespace) (jvm_memory_used_bytes{application='aboost', area='nonheap'})* 100) /sum by (pod,namespace) (jvm_memory_max_bytes{application='aboost', area='nonheap'}) ",
           "interval": "",
           "legendFormat": "nonheap_usage_{{pod}}({{namespace}})",
           "range": true,
@@ -1678,7 +1678,7 @@
     {
       "alert": {
         "alertRuleTags": {
-          "application": "kpay",
+          "application": "aboost",
           "env": "beta"
         },
         "conditions": [
@@ -1811,7 +1811,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "(sum by (namespace,pod, interface) (increase(dubbo_request_success_total{application='kpay'}[2m])/120))/(sum by (namespace,pod, interface) (increase(dubbo_request_total{application='kpay'}[2m])/120))",
+          "expr": "(sum by (namespace,pod, interface) (increase(dubbo_request_success_total{application='aboost'}[2m])/120))/(sum by (namespace,pod, interface) (increase(dubbo_request_total{application='aboost'}[2m])/120))",
           "instant": false,
           "interval": "",
           "legendFormat": "{{pod}}_{{interface}}",
@@ -1833,7 +1833,7 @@
     {
       "alert": {
         "alertRuleTags": {
-          "application": "kpay",
+          "application": "aboost",
           "env": "beta"
         },
         "conditions": [
@@ -1957,7 +1957,7 @@
             "uid": "prometheus"
           },
           "exemplar": true,
-          "expr": "sum by (namespace,pod, interface, method) (dubbo_request_latency_seconds{application='kpay', quantile='0.9'}*1000)",
+          "expr": "sum by (namespace,pod, interface, method) (dubbo_request_latency_seconds{application='aboost', quantile='0.9'}*1000)",
           "interval": "",
           "legendFormat": "{{pod}}_{{interface}}.{{method}}",
           "refId": "A"
@@ -1978,7 +1978,7 @@
     {
       "alert": {
         "alertRuleTags": {
-          "application": "kpay",
+          "application": "aboost",
           "env": "beta"
         },
         "conditions": [
@@ -2093,7 +2093,7 @@
             "uid": "prometheus"
           },
           "exemplar": true,
-          "expr": "sum by (namespace,pod, interface) (increase(dubbo_request_concurrent_total{application='kpay'}[2m])/120)",
+          "expr": "sum by (namespace,pod, interface) (increase(dubbo_request_concurrent_total{application='aboost'}[2m])/120)",
           "interval": "",
           "legendFormat": "{{pod}}_{{interface}}",
           "refId": "A"
@@ -2140,7 +2140,7 @@
     {
       "alert": {
         "alertRuleTags": {
-          "application": "kpay",
+          "application": "aboost",
           "env": "beta"
         },
         "conditions": [
@@ -2266,7 +2266,7 @@
             "uid": "prometheus"
           },
           "exemplar": true,
-          "expr": "sum by (namespace,pod, uri) (rate(http_server_requests_seconds_count{application='kpay'}[2m]))",
+          "expr": "sum by (namespace,pod, uri) (rate(http_server_requests_seconds_count{application='aboost'}[2m]))",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -2289,7 +2289,7 @@
     {
       "alert": {
         "alertRuleTags": {
-          "application": "kpay",
+          "application": "aboost",
           "env": "beta"
         },
         "conditions": [
@@ -2419,7 +2419,7 @@
             "uid": "prometheus"
           },
           "exemplar": true,
-          "expr": "sum by (namespace,pod, uri) (rate(http_server_requests_seconds_sum{application=\"kpay\", status!~\"5..\"}[2m]))/sum by (namespace,pod, uri) (rate(http_server_requests_seconds_count{application=\"kpay\", status!~\"5..\"}[2m]))",
+          "expr": "sum by (namespace,pod, uri) (rate(http_server_requests_seconds_sum{application=\"aboost\", status!~\"5..\"}[2m]))/sum by (namespace,pod, uri) (rate(http_server_requests_seconds_count{application=\"aboost\", status!~\"5..\"}[2m]))",
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -2433,7 +2433,7 @@
             "uid": "prometheus"
           },
           "exemplar": true,
-          "expr": "max by (namespace,pod, uri) (http_server_requests_seconds_max{application=\"kpay\", status!~\"5..\"})",
+          "expr": "max by (namespace,pod, uri) (http_server_requests_seconds_max{application=\"aboost\", status!~\"5..\"})",
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -2457,7 +2457,7 @@
     {
       "alert": {
         "alertRuleTags": {
-          "application": "kpay",
+          "application": "aboost",
           "env": "beta"
         },
         "conditions": [
@@ -2621,7 +2621,7 @@
             "uid": "prometheus"
           },
           "exemplar": true,
-          "expr": "sum by (namespace,pod, uri) (rate(http_server_requests_seconds_count{application=\"kpay\", status=~\"5..\"}[2m]))",
+          "expr": "sum by (namespace,pod, uri) (rate(http_server_requests_seconds_count{application=\"aboost\", status=~\"5..\"}[2m]))",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -2670,7 +2670,7 @@
     {
       "alert": {
         "alertRuleTags": {
-          "application": "kpay",
+          "application": "aboost",
           "env": "beta"
         },
         "conditions": [
@@ -2789,7 +2789,7 @@
             "uid": "prometheus"
           },
           "exemplar": true,
-          "expr": "avg by (namespace,pod, action, cause) (rate(jvm_gc_pause_seconds_count{application=\"kpay\"}[2m]))",
+          "expr": "avg by (namespace,pod, action, cause) (rate(jvm_gc_pause_seconds_count{application=\"aboost\"}[2m]))",
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -2803,7 +2803,7 @@
             "uid": "prometheus"
           },
           "exemplar": true,
-          "expr": "avg by (namespace,pod, cause) (rate(jvm_gc_pause_seconds_count{application=\"kpay\", action=\"end of major GC\"}[2m]))",
+          "expr": "avg by (namespace,pod, cause) (rate(jvm_gc_pause_seconds_count{application=\"aboost\", action=\"end of major GC\"}[2m]))",
           "hide": false,
           "interval": "",
           "legendFormat": "MajorGC_{{pod}}",
@@ -2825,7 +2825,7 @@
     {
       "alert": {
         "alertRuleTags": {
-          "application": "kpay",
+          "application": "aboost",
           "env": "beta"
         },
         "conditions": [
@@ -2944,7 +2944,7 @@
             "uid": "prometheus"
           },
           "exemplar": true,
-          "expr": "avg by (namespace,pod, action, cause) (rate(jvm_gc_pause_seconds_sum{application=\"kpay\"}[2m])/rate(jvm_gc_pause_seconds_count{application=\"kpay\"}[2m]))",
+          "expr": "avg by (namespace,pod, action, cause) (rate(jvm_gc_pause_seconds_sum{application=\"aboost\"}[2m])/rate(jvm_gc_pause_seconds_count{application=\"aboost\"}[2m]))",
           "format": "time_series",
           "hide": false,
           "instant": false,
@@ -2959,7 +2959,7 @@
             "uid": "prometheus"
           },
           "exemplar": true,
-          "expr": "avg by (namespace,pod, action, cause) (jvm_gc_pause_seconds_max{application=\"kpay\"})",
+          "expr": "avg by (namespace,pod, action, cause) (jvm_gc_pause_seconds_max{application=\"aboost\"})",
           "format": "time_series",
           "hide": false,
           "instant": false,
@@ -3065,7 +3065,7 @@
             "uid": "prometheus"
           },
           "exemplar": true,
-          "expr": "avg by (pod) (rate(jvm_gc_memory_allocated_bytes_total{application=\"kpay\"}[2m]))",
+          "expr": "avg by (pod) (rate(jvm_gc_memory_allocated_bytes_total{application=\"aboost\"}[2m]))",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -3078,7 +3078,7 @@
             "uid": "prometheus"
           },
           "exemplar": true,
-          "expr": "avg by (pod) (rate(jvm_gc_memory_promoted_bytes_total{application=\"kpay\"}[2m]))",
+          "expr": "avg by (pod) (rate(jvm_gc_memory_promoted_bytes_total{application=\"aboost\"}[2m]))",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -3119,7 +3119,7 @@
     {
       "alert": {
         "alertRuleTags": {
-          "application": "kpay",
+          "application": "aboost",
           "env": "beta"
         },
         "conditions": [
@@ -3287,7 +3287,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "sum(irate(container_cpu_usage_seconds_total{container=\"kpay\"}[5m])*100)by(namespace,pod)/sum(container_spec_cpu_quota{container=\"kpay\"}/container_spec_cpu_period{container=\"kpay\"})by(namespace,pod)",
+          "expr": "sum(irate(container_cpu_usage_seconds_total{container=\"aboost\"}[5m])*100)by(namespace,pod)/sum(container_spec_cpu_quota{container=\"aboost\"}/container_spec_cpu_period{container=\"aboost\"})by(namespace,pod)",
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -3433,7 +3433,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "sum(container_cpu_load_average_10s{container=\"kpay\"})by(namespace,pod)/sum(container_spec_cpu_quota{container=\"kpay\"}/container_spec_cpu_period{container=\"kpay\"})by(namespace,pod)/1000",
+          "expr": "sum(container_cpu_load_average_10s{container=\"aboost\"})by(namespace,pod)/sum(container_spec_cpu_quota{container=\"aboost\"}/container_spec_cpu_period{container=\"aboost\"})by(namespace,pod)/1000",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -3451,7 +3451,7 @@
     {
       "alert": {
         "alertRuleTags": {
-          "application": "kpay",
+          "application": "aboost",
           "env": "beta"
         },
         "conditions": [
@@ -3648,7 +3648,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "increase(log4j2_events_total{application='kpay', level =~'error|warn'}[2m])",
+          "expr": "increase(log4j2_events_total{application='aboost', level =~'error|warn'}[2m])",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -3674,7 +3674,7 @@
     {
       "alert": {
         "alertRuleTags": {
-          "application": "kpay",
+          "application": "aboost",
           "env": "beta"
         },
         "conditions": [
@@ -3887,7 +3887,7 @@
             "uid": "prometheus"
           },
           "exemplar": true,
-          "expr": "sum(jvm_threads_states_threads{application='kpay'}) by (pod,namespace,state)",
+          "expr": "sum(jvm_threads_states_threads{application='aboost'}) by (pod,namespace,state)",
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -3901,7 +3901,7 @@
             "uid": "prometheus"
           },
           "exemplar": true,
-          "expr": "sum(jvm_threads_states_threads{application='kpay',state='blocked'}) by (pod,namespace)",
+          "expr": "sum(jvm_threads_states_threads{application='aboost',state='blocked'}) by (pod,namespace)",
           "hide": false,
           "interval": "",
           "legendFormat": "block_thread_{{pod}}",
@@ -3923,7 +3923,7 @@
     {
       "alert": {
         "alertRuleTags": {
-          "application": "kpay"
+          "application": "aboost"
         },
         "conditions": [
           {
@@ -4115,7 +4115,7 @@
             "uid": "prometheus"
           },
           "exemplar": true,
-          "expr": "sum by (namespace,pod) (jvm_threads_live_threads{application=\"kpay\"})",
+          "expr": "sum by (namespace,pod) (jvm_threads_live_threads{application=\"aboost\"})",
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -4131,7 +4131,7 @@
             "uid": "prometheus"
           },
           "exemplar": true,
-          "expr": " sum by (namespace,pod) (jvm_threads_daemon_threads{application=\"kpay\"})",
+          "expr": " sum by (namespace,pod) (jvm_threads_daemon_threads{application=\"aboost\"})",
           "format": "time_series",
           "hide": true,
           "interval": "",
@@ -4147,7 +4147,7 @@
             "uid": "prometheus"
           },
           "exemplar": true,
-          "expr": " sum by (namespace,pod) (jvm_threads_peak_threads{application=\"kpay\"})",
+          "expr": " sum by (namespace,pod) (jvm_threads_peak_threads{application=\"aboost\"})",
           "format": "time_series",
           "hide": true,
           "interval": "",
@@ -4162,7 +4162,7 @@
             "uid": "prometheus"
           },
           "exemplar": true,
-          "expr": "sum by (namespace,pod) (jvm_threads_states_threads{application=\"kpay\"})",
+          "expr": "sum by (namespace,pod) (jvm_threads_states_threads{application=\"aboost\"})",
           "format": "time_series",
           "hide": true,
           "interval": "",
@@ -4187,7 +4187,7 @@
     {
       "alert": {
         "alertRuleTags": {
-          "application": "kpay",
+          "application": "aboost",
           "env": "prod"
         },
         "conditions": [
@@ -4327,7 +4327,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "sum by (container,pod,namespace) (increase(kube_pod_container_status_restarts_total{container='kpay'}[10m]))",
+          "expr": "sum by (container,pod,namespace) (increase(kube_pod_container_status_restarts_total{container='aboost'}[10m]))",
           "interval": "",
           "legendFormat": "restart_{{namespace}}_{{pod}}",
           "range": true,
@@ -4340,7 +4340,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "sum by (container,pod,namespace) (increase(kube_pod_container_status_last_terminated_reason{container='kpay', reason=\"OOMKilled\"}[10m]))",
+          "expr": "sum by (container,pod,namespace) (increase(kube_pod_container_status_last_terminated_reason{container='aboost', reason=\"OOMKilled\"}[10m]))",
           "hide": false,
           "interval": "",
           "legendFormat": "OOM_{{namespace}}_{{pod}}",
@@ -4470,7 +4470,7 @@
             "uid": "prometheus"
           },
           "exemplar": true,
-          "expr": " sum by (pod) (jvm_classes_loaded_classes{application=\"kpay\"})",
+          "expr": " sum by (pod) (jvm_classes_loaded_classes{application=\"aboost\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -4567,7 +4567,7 @@
             "uid": "prometheus"
           },
           "exemplar": true,
-          "expr": " sum by (pod) (delta(jvm_classes_loaded_classes{application=\"kpay\"}[5m]))",
+          "expr": " sum by (pod) (delta(jvm_classes_loaded_classes{application=\"aboost\"}[5m]))",
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -4692,7 +4692,7 @@
             "uid": "prometheus"
           },
           "exemplar": true,
-          "expr": "avg by (pod) (jvm_buffer_memory_used_bytes{application=\"kpay\", id=\"direct\"})",
+          "expr": "avg by (pod) (jvm_buffer_memory_used_bytes{application=\"aboost\", id=\"direct\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -4707,7 +4707,7 @@
             "uid": "prometheus"
           },
           "exemplar": true,
-          "expr": "jvm_buffer_total_capacity_bytes{application=\"kpay\", id=\"direct\"}",
+          "expr": "jvm_buffer_total_capacity_bytes{application=\"aboost\", id=\"direct\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -4807,7 +4807,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "jvm_buffer_count_buffers{application=\"kpay\", id=\"direct\"}",
+          "expr": "jvm_buffer_count_buffers{application=\"aboost\", id=\"direct\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -4906,7 +4906,7 @@
             "uid": "prometheus"
           },
           "exemplar": true,
-          "expr": "avg by (pod) (jvm_buffer_memory_used_bytes{application=\"kpay\", id=\"mapped\"})",
+          "expr": "avg by (pod) (jvm_buffer_memory_used_bytes{application=\"aboost\", id=\"mapped\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -4921,7 +4921,7 @@
             "uid": "prometheus"
           },
           "exemplar": true,
-          "expr": "avg by (pod) (jvm_buffer_total_capacity_bytes{application=\"kpay\", id=\"mapped\"})",
+          "expr": "avg by (pod) (jvm_buffer_total_capacity_bytes{application=\"aboost\", id=\"mapped\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -5020,7 +5020,7 @@
             "uid": "prometheus"
           },
           "exemplar": true,
-          "expr": "avg by (pod) (jvm_buffer_count_buffers{application=\"kpay\", id=\"mapped\"})",
+          "expr": "avg by (pod) (jvm_buffer_count_buffers{application=\"aboost\", id=\"mapped\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -5052,7 +5052,7 @@
           "type": "prometheus",
           "uid": "prometheus"
         },
-        "definition": "label_values(container_memory_usage_bytes{container=\"kpay\", }, namespace)",
+        "definition": "label_values(container_memory_usage_bytes{container=\"aboost\", }, namespace)",
         "hide": 0,
         "includeAll": false,
         "label": "namespace",
@@ -5061,7 +5061,7 @@
         "name": "namespace",
         "options": [],
         "query": {
-          "query": "label_values(container_memory_usage_bytes{container=\"kpay\", }, namespace)",
+          "query": "label_values(container_memory_usage_bytes{container=\"aboost\", }, namespace)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 2,
@@ -5077,14 +5077,14 @@
         "allFormat": "glob",
         "current": {
           "selected": false,
-          "text": "blue-kpay-858f56774d-jkszg",
-          "value": "blue-kpay-858f56774d-jkszg"
+          "text": "blue-aboost-858f56774d-jkszg",
+          "value": "blue-aboost-858f56774d-jkszg"
         },
         "datasource": {
           "type": "prometheus",
           "uid": "prometheus"
         },
-        "definition": "label_values(container_memory_usage_bytes{container=\"kpay\", namespace=\"$namespace\"}, pod)",
+        "definition": "label_values(container_memory_usage_bytes{container=\"aboost\", namespace=\"$namespace\"}, pod)",
         "hide": 0,
         "includeAll": false,
         "label": "pod",
@@ -5093,7 +5093,7 @@
         "name": "pod",
         "options": [],
         "query": {
-          "query": "label_values(container_memory_usage_bytes{container=\"kpay\", namespace=\"$namespace\"}, pod)",
+          "query": "label_values(container_memory_usage_bytes{container=\"aboost\", namespace=\"$namespace\"}, pod)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 2,
@@ -5202,8 +5202,8 @@
     ]
   },
   "timezone": "browser",
-  "title": "kpay",
-  "uid": "kpay",
+  "title": "aboost",
+  "uid": "aboost",
   "version": 73,
   "weekStart": ""
 }

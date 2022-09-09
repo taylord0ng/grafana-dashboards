@@ -3,7 +3,10 @@
     "list": [
       {
         "builtIn": 1,
-        "datasource": "-- Grafana --",
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
@@ -19,7 +22,10 @@
         "type": "dashboard"
       },
       {
-        "datasource": "prometheus",
+        "datasource": {
+          "type": "prometheus",
+          "uid": "prometheus"
+        },
         "enable": true,
         "expr": "resets(process_uptime_seconds{instance=\"$instance\"}[1m]) > 0",
         "iconColor": "rgba(255, 96, 96, 1)",
@@ -37,8 +43,7 @@
   "fiscalYearStartMonth": 0,
   "gnetId": 13694,
   "graphTooltip": 1,
-  "id": 755,
-  "iteration": 1648115890645,
+  "id": 28,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -57,6 +62,15 @@
       "id": 125,
       "panels": [],
       "repeat": "pod",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "Quick Facts",
       "type": "row"
     },
@@ -94,7 +108,7 @@
         "x": 0,
         "y": 1
       },
-      "id": 63,
+      "id": 11,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -112,11 +126,15 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.4.2",
+      "pluginVersion": "9.0.8",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
           "exemplar": true,
-          "expr": "process_uptime_seconds{application='trading-engine', pod='$pod'}",
+          "expr": "process_uptime_seconds{application=\"trading-engine\",namespace=\"$namespace\",pod=\"$pod\"}",
           "format": "time_series",
           "instant": false,
           "interval": "",
@@ -128,6 +146,7 @@
         }
       ],
       "title": "Uptime $pod",
+      "transparent": true,
       "type": "stat"
     },
     {
@@ -174,7 +193,7 @@
         "x": 8,
         "y": 1
       },
-      "id": 92,
+      "id": 12,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -194,9 +213,13 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "8.4.2",
+      "pluginVersion": "9.0.8",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
           "exemplar": true,
           "expr": "process_start_time_seconds{application='trading-engine', pod='$pod'}*1000",
           "format": "time_series",
@@ -210,6 +233,7 @@
         }
       ],
       "title": "Start time $pod",
+      "transparent": true,
       "type": "stat"
     },
     {
@@ -247,6 +271,10 @@
         "name": "Cpu load 10s alert",
         "noDataState": "no_data",
         "notifications": []
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -312,7 +340,7 @@
         "x": 16,
         "y": 1
       },
-      "id": 171,
+      "id": 13,
       "maxDataPoints": 800,
       "options": {
         "legend": {
@@ -327,6 +355,10 @@
       },
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
           "exemplar": true,
           "expr": "container_cpu_load_average_10s{container='trading-engine', pod='$pod'}",
           "interval": "",
@@ -343,6 +375,7 @@
         }
       ],
       "title": "Cpu load 10s $pod",
+      "transparent": true,
       "type": "timeseries"
     },
     {
@@ -369,7 +402,7 @@
             },
             "lineInterpolation": "linear",
             "lineWidth": 1,
-            "pointSize": 5,
+            "pointSize": 2,
             "scaleDistribution": {
               "type": "linear"
             },
@@ -380,10 +413,10 @@
               "mode": "none"
             },
             "thresholdsStyle": {
-              "mode": "off"
+              "mode": "line"
             }
           },
-          "decimals": 2,
+          "decimals": 1,
           "mappings": [
             {
               "options": {
@@ -395,6 +428,8 @@
               "type": "special"
             }
           ],
+          "max": 1,
+          "min": 0,
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -403,16 +438,12 @@
                 "value": null
               },
               {
-                "color": "rgba(237, 129, 40, 0.89)",
-                "value": 70
-              },
-              {
                 "color": "rgba(245, 54, 54, 0.9)",
-                "value": 90
+                "value": 0.8
               }
             ]
           },
-          "unit": "percent"
+          "unit": "percentunit"
         },
         "overrides": []
       },
@@ -422,7 +453,7 @@
         "x": 0,
         "y": 10
       },
-      "id": 65,
+      "id": 14,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -439,17 +470,24 @@
       "pluginVersion": "8.1.5",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
           "exemplar": true,
-          "expr": "sum(jvm_memory_used_bytes{ area=\"heap\"})*100/sum(jvm_memory_max_bytes{ area=\"heap\"})",
+          "expr": "sum(jvm_memory_used_bytes{area=\"heap\",application=\"trading-engine\",pod=\"$pod\",namespace=\"$namespace\"})/sum(jvm_memory_max_bytes{area=\"heap\",application=\"trading-engine\",pod=\"$pod\",namespace=\"$namespace\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
-          "legendFormat": "HeapUsed_$pod",
+          "legendFormat": "Heap_$pod",
+          "range": true,
           "refId": "A",
           "step": 14400
         }
       ],
       "title": " Heap used $pod",
+      "transparent": true,
       "type": "timeseries"
     },
     {
@@ -476,7 +514,7 @@
             },
             "lineInterpolation": "linear",
             "lineWidth": 1,
-            "pointSize": 5,
+            "pointSize": 2,
             "scaleDistribution": {
               "type": "linear"
             },
@@ -487,10 +525,10 @@
               "mode": "none"
             },
             "thresholdsStyle": {
-              "mode": "off"
+              "mode": "line"
             }
           },
-          "decimals": 2,
+          "decimals": 1,
           "mappings": [
             {
               "options": {
@@ -512,6 +550,8 @@
               "type": "range"
             }
           ],
+          "max": 1,
+          "min": 0,
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -520,16 +560,12 @@
                 "value": null
               },
               {
-                "color": "rgba(237, 129, 40, 0.89)",
-                "value": 70
-              },
-              {
                 "color": "rgba(245, 54, 54, 0.9)",
-                "value": 90
+                "value": 0.8
               }
             ]
           },
-          "unit": "percent"
+          "unit": "percentunit"
         },
         "overrides": []
       },
@@ -539,7 +575,7 @@
         "x": 8,
         "y": 10
       },
-      "id": 75,
+      "id": 15,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -556,8 +592,12 @@
       "pluginVersion": "8.1.5",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
           "exemplar": true,
-          "expr": "sum(jvm_memory_used_bytes{ area=\"nonheap\"})*100/sum(jvm_memory_max_bytes{ area=\"nonheap\"})",
+          "expr": "sum(jvm_memory_used_bytes{area=\"nonheap\",pod=\"$pod\",namespace=\"$namespace\"})/sum(jvm_memory_max_bytes{ area=\"nonheap\",pod=\"$pod\",namespace=\"$namespace\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -567,6 +607,7 @@
         }
       ],
       "title": "Non-Heap used $pod",
+      "transparent": true,
       "type": "timeseries"
     },
     {
@@ -584,6 +625,15 @@
       "id": 129,
       "panels": [],
       "repeat": "pod",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "JVM Memory Pools (Heap)",
       "type": "row"
     },
@@ -611,7 +661,7 @@
         "y": 20
       },
       "hiddenSeries": false,
-      "id": 3,
+      "id": 21,
       "legend": {
         "alignAsTable": false,
         "avg": false,
@@ -632,7 +682,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.4.2",
+      "pluginVersion": "9.0.8",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -643,6 +693,10 @@
       "steppedLine": false,
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
           "exemplar": true,
           "expr": "jvm_memory_committed_bytes{pod=\"$pod\", id=\"$jvm_memory_pool_heap\"}",
           "format": "time_series",
@@ -655,6 +709,10 @@
           "step": 1800
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
           "exemplar": true,
           "expr": "jvm_memory_max_bytes{pod=\"$pod\", id=\"$jvm_memory_pool_heap\"}",
           "format": "time_series",
@@ -676,6 +734,7 @@
         "sort": 0,
         "value_type": "cumulative"
       },
+      "transparent": true,
       "type": "graph",
       "x-axis": true,
       "xaxis": {
@@ -719,6 +778,15 @@
       },
       "id": 127,
       "panels": [],
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "JVM Memory",
       "type": "row"
     },
@@ -785,12 +853,12 @@
         "x": 0,
         "y": 30
       },
-      "id": 24,
+      "id": 31,
       "links": [],
       "options": {
         "legend": {
           "calcs": [
-            "lastNotNull",
+            "last",
             "max"
           ],
           "displayMode": "list",
@@ -804,38 +872,57 @@
       "pluginVersion": "8.1.5",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
           "exemplar": true,
-          "expr": "sum by (pod) (jvm_memory_used_bytes{application=\"trading-engine\", area=\"heap\"})",
+          "expr": "sum by (pod) (jvm_memory_used_bytes{application=\"trading-engine\", area=\"heap\",pod=\"$pod\",namespace=\"$namespace\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
-          "legendFormat": "heap_used_{{pod}}",
+          "legendFormat": "heap_used",
           "metric": "",
+          "range": true,
           "refId": "A",
           "step": 2400
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
           "exemplar": true,
-          "expr": "sum by (pod) (jvm_memory_committed_bytes{application=\"trading-engine\", area=\"heap\"})",
+          "expr": "sum by (pod) (jvm_memory_committed_bytes{application=\"trading-engine\", area=\"heap\",pod=\"$pod\",namespace=\"$namespace\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
-          "legendFormat": "committed_{{pod}}",
+          "legendFormat": "committed",
+          "range": true,
           "refId": "B",
           "step": 2400
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
           "exemplar": true,
-          "expr": "sum by (pod) (jvm_memory_max_bytes{application=\"trading-engine\", area=\"heap\"})",
+          "expr": "sum by (pod) (jvm_memory_max_bytes{application=\"trading-engine\", area=\"heap\",pod=\"$pod\",namespace=\"$namespace\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
-          "legendFormat": "max_{{pod}}",
+          "legendFormat": "max",
+          "range": true,
           "refId": "C",
           "step": 2400
         }
       ],
       "title": "JVM Heap",
+      "transparent": true,
       "type": "timeseries"
     },
     {
@@ -901,12 +988,12 @@
         "x": 8,
         "y": 30
       },
-      "id": 25,
+      "id": 32,
       "links": [],
       "options": {
         "legend": {
           "calcs": [
-            "lastNotNull",
+            "last",
             "max"
           ],
           "displayMode": "list",
@@ -920,38 +1007,57 @@
       "pluginVersion": "8.1.5",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
           "exemplar": true,
-          "expr": "sum by (pod)(jvm_memory_used_bytes{application='trading-engine', area=\"nonheap\"})",
+          "expr": "sum by (pod)(jvm_memory_used_bytes{application='trading-engine', area=\"nonheap\",pod=\"$pod\",namespace=\"$namespace\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
-          "legendFormat": "used_{{pod}}",
+          "legendFormat": "used",
           "metric": "",
+          "range": true,
           "refId": "A",
           "step": 2400
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
           "exemplar": true,
-          "expr": "sum by (pod) (jvm_memory_committed_bytes{application='trading-engine', area=\"nonheap\"})",
+          "expr": "sum by (pod) (jvm_memory_committed_bytes{application='trading-engine', area=\"nonheap\",pod=\"$pod\",namespace=\"$namespace\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
-          "legendFormat": "committed_{{pod}}",
+          "legendFormat": "committed",
+          "range": true,
           "refId": "B",
           "step": 2400
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
           "exemplar": true,
-          "expr": "sum by (pod) (jvm_memory_max_bytes{application='trading-engine', area=\"nonheap\"})",
+          "expr": "sum by (pod) (jvm_memory_max_bytes{application='trading-engine', area=\"nonheap\",pod=\"$pod\",namespace=\"$namespace\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
-          "legendFormat": "max_{{pod}}",
+          "legendFormat": "max",
+          "range": true,
           "refId": "C",
           "step": 2400
         }
       ],
       "title": "JVM Non-Heap",
+      "transparent": true,
       "type": "timeseries"
     },
     {
@@ -1017,12 +1123,12 @@
         "x": 16,
         "y": 30
       },
-      "id": 26,
+      "id": 33,
       "links": [],
       "options": {
         "legend": {
           "calcs": [
-            "lastNotNull",
+            "last",
             "max"
           ],
           "displayMode": "list",
@@ -1036,51 +1142,70 @@
       "pluginVersion": "8.1.5",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
           "exemplar": true,
-          "expr": "sum by (pod) (jvm_memory_used_bytes{application='trading-engine'})",
+          "expr": "sum by (pod) (jvm_memory_used_bytes{application='trading-engine',pod=\"$pod\",namespace=\"$namespace\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
-          "legendFormat": "used_{{pod}}",
+          "legendFormat": "used",
           "metric": "",
+          "range": true,
           "refId": "A",
           "step": 2400
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
           "exemplar": true,
-          "expr": "sum by (pod) (jvm_memory_committed_bytes{application='trading-engine'})",
+          "expr": "sum by (pod) (jvm_memory_committed_bytes{application='trading-engine',pod=\"$pod\",namespace=\"$namespace\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
-          "legendFormat": "committed_{{pod}}",
+          "legendFormat": "committed",
+          "range": true,
           "refId": "B",
           "step": 2400
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
           "exemplar": true,
-          "expr": "sum by (pod) (jvm_memory_max_bytes{application='trading-engine'})",
+          "expr": "sum by (pod) (jvm_memory_max_bytes{application='trading-engine',pod=\"$pod\",namespace=\"$namespace\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
-          "legendFormat": "max_{{pod}}",
+          "legendFormat": "max",
+          "range": true,
           "refId": "C",
           "step": 2400
         }
       ],
       "title": "JVM Total",
+      "transparent": true,
       "type": "timeseries"
     },
     {
       "alert": {
         "alertRuleTags": {
           "application": "trading-engine",
-          "env": "prod"
+          "env": "beta"
         },
         "conditions": [
           {
             "evaluator": {
               "params": [
-                1
+                80
               ],
               "type": "gt"
             },
@@ -1110,6 +1235,10 @@
         "noDataState": "no_data",
         "notifications": []
       },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1129,7 +1258,7 @@
             },
             "lineInterpolation": "linear",
             "lineWidth": 1,
-            "pointSize": 5,
+            "pointSize": 2,
             "scaleDistribution": {
               "type": "linear"
             },
@@ -1143,7 +1272,10 @@
               "mode": "off"
             }
           },
+          "decimals": 1,
           "mappings": [],
+          "max": 100,
+          "min": 0,
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -1167,7 +1299,7 @@
         "x": 0,
         "y": 39
       },
-      "id": 177,
+      "id": 34,
       "options": {
         "legend": {
           "calcs": [],
@@ -1181,10 +1313,16 @@
       },
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
           "exemplar": true,
-          "expr": "(sum by (pod) (jvm_memory_used_bytes{application='trading-engine', area='heap'})* 100) /sum by (pod) (jvm_memory_max_bytes{application='trading-engine', area='heap'}) ",
+          "expr": "(sum by (pod,namespace) (jvm_memory_used_bytes{application='trading-engine', area='heap'})* 100) /sum by (pod,namespace) (jvm_memory_max_bytes{application='trading-engine', area='heap'}) ",
           "interval": "",
-          "legendFormat": "heap_usage_{{pod}}",
+          "legendFormat": "heap_usage_{{pod}}({{namespace}})",
+          "range": true,
           "refId": "HeapUsage"
         }
       ],
@@ -1192,18 +1330,19 @@
         {
           "colorMode": "critical",
           "op": "gt",
-          "value": 1,
+          "value": 80,
           "visible": true
         }
       ],
       "title": "Heap Usage",
+      "transparent": true,
       "type": "timeseries"
     },
     {
       "alert": {
         "alertRuleTags": {
           "application": "trading-engine",
-          "env": "prod"
+          "env": "beta"
         },
         "conditions": [
           {
@@ -1239,6 +1378,10 @@
         "noDataState": "no_data",
         "notifications": []
       },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1258,7 +1401,7 @@
             },
             "lineInterpolation": "linear",
             "lineWidth": 1,
-            "pointSize": 5,
+            "pointSize": 2,
             "scaleDistribution": {
               "type": "linear"
             },
@@ -1272,7 +1415,10 @@
               "mode": "off"
             }
           },
+          "decimals": 1,
           "mappings": [],
+          "max": 100,
+          "min": 0,
           "thresholds": {
             "mode": "percentage",
             "steps": [
@@ -1296,7 +1442,7 @@
         "x": 8,
         "y": 39
       },
-      "id": 178,
+      "id": 35,
       "options": {
         "legend": {
           "calcs": [],
@@ -1310,10 +1456,16 @@
       },
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
           "exemplar": true,
-          "expr": "(sum by (pod) (jvm_memory_used_bytes{application='trading-engine', area='nonheap'})* 100) /sum by (pod) (jvm_memory_max_bytes{application='trading-engine', area='nonheap'}) ",
+          "expr": "(sum by (pod,namespace) (jvm_memory_used_bytes{application='trading-engine', area='nonheap'})* 100) /sum by (pod,namespace) (jvm_memory_max_bytes{application='trading-engine', area='nonheap'}) ",
           "interval": "",
-          "legendFormat": "nonheap_usage_{{pod}}",
+          "legendFormat": "nonheap_usage_{{pod}}({{namespace}})",
+          "range": true,
           "refId": "NonHeapUsage"
         }
       ],
@@ -1326,6 +1478,7 @@
         }
       ],
       "title": "Non Heap Usage",
+      "transparent": true,
       "type": "timeseries"
     },
     {
@@ -1343,25 +1496,74 @@
       "id": 130,
       "panels": [],
       "repeat": "pod",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "JVM Memory Pools (Non-Heap)",
       "type": "row"
     },
     {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
       "datasource": {
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "editable": true,
-      "error": false,
-      "fill": 1,
-      "fillGradient": 0,
-      "grid": {
-        "leftLogBase": 1,
-        "rightLogBase": 1
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "bytes"
+        },
+        "overrides": []
       },
       "gridPos": {
         "h": 9,
@@ -1369,115 +1571,90 @@
         "x": 0,
         "y": 49
       },
-      "hiddenSeries": false,
-      "id": 78,
-      "legend": {
-        "alignAsTable": false,
-        "avg": false,
-        "current": true,
-        "max": true,
-        "min": false,
-        "rightSide": false,
-        "show": true,
-        "total": false,
-        "values": true
-      },
-      "lines": true,
-      "linewidth": 1,
+      "id": 41,
       "links": [],
-      "maxPerRow": 3,
-      "nullPointMode": "null",
       "options": {
-        "alertThreshold": true
+        "legend": {
+          "calcs": [
+            "last",
+            "max"
+          ],
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
       },
-      "percentage": false,
-      "pluginVersion": "8.4.2",
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
+      "pluginVersion": "9.0.5",
       "repeat": "jvm_memory_pool_nonheap",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
           "exemplar": true,
-          "expr": "jvm_memory_used_bytes{pod=\"$pod\", id=\"$jvm_memory_pool_nonheap\"}",
+          "expr": "jvm_memory_used_bytes{pod=\"$pod\", id=\"$jvm_memory_pool_nonheap\",pod=\"$pod\",namespace=\"$namespace\"}",
           "format": "time_series",
           "hide": false,
           "interval": "",
           "intervalFactor": 2,
-          "legendFormat": "used {{pod}}",
+          "legendFormat": "used",
           "metric": "",
+          "range": true,
           "refId": "A",
           "step": 1800
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
           "exemplar": true,
-          "expr": "jvm_memory_committed_bytes{pod=\"$pod\", id=\"$jvm_memory_pool_nonheap\"}",
+          "expr": "jvm_memory_committed_bytes{pod=\"$pod\", id=\"$jvm_memory_pool_nonheap\",pod=\"$pod\",namespace=\"$namespace\"}",
           "format": "time_series",
           "hide": false,
           "interval": "",
           "intervalFactor": 2,
-          "legendFormat": "commited  {{pod}}",
+          "legendFormat": "commited",
           "metric": "",
+          "range": true,
           "refId": "B",
           "step": 1800
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
           "exemplar": true,
-          "expr": "jvm_memory_max_bytes{pod=\"$pod\", id=\"$jvm_memory_pool_nonheap\"}",
+          "expr": "jvm_memory_max_bytes{pod=\"$pod\", id=\"$jvm_memory_pool_nonheap\",pod=\"$pod\",namespace=\"$namespace\"}",
           "format": "time_series",
           "hide": false,
           "interval": "",
           "intervalFactor": 2,
-          "legendFormat": "max  {{pod}}",
+          "legendFormat": "max",
           "metric": "",
+          "range": true,
           "refId": "C",
           "step": 1800
         }
       ],
-      "thresholds": [],
-      "timeRegions": [],
       "title": "$jvm_memory_pool_nonheap $pod",
-      "tooltip": {
-        "msResolution": false,
-        "shared": true,
-        "sort": 0,
-        "value_type": "cumulative"
-      },
-      "type": "graph",
-      "x-axis": true,
-      "xaxis": {
-        "mode": "time",
-        "show": true,
-        "values": []
-      },
-      "y-axis": true,
-      "y_formats": [
-        "mbytes",
-        "short"
-      ],
-      "yaxes": [
-        {
-          "format": "bytes",
-          "logBase": 1,
-          "min": 0,
-          "show": true
-        },
-        {
-          "format": "short",
-          "logBase": 1,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false
-      }
+      "transparent": true,
+      "type": "timeseries"
     },
     {
       "collapsed": false,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -1486,6 +1663,15 @@
       },
       "id": 165,
       "panels": [],
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "Dubbo Requests Overview",
       "type": "row"
     },
@@ -1493,13 +1679,13 @@
       "alert": {
         "alertRuleTags": {
           "application": "trading-engine",
-          "env": "prod"
+          "env": "beta"
         },
         "conditions": [
           {
             "evaluator": {
               "params": [
-                80
+                0.95
               ],
               "type": "lt"
             },
@@ -1508,7 +1694,7 @@
             },
             "query": {
               "params": [
-                "DubboRequestRatre",
+                "DubboRequestRate",
                 "5m",
                 "now"
               ]
@@ -1529,6 +1715,10 @@
         "noDataState": "no_data",
         "notifications": []
       },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1538,7 +1728,7 @@
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
-            "drawStyle": "points",
+            "drawStyle": "line",
             "fillOpacity": 0,
             "gradientMode": "none",
             "hideFrom": {
@@ -1548,7 +1738,7 @@
             },
             "lineInterpolation": "linear",
             "lineWidth": 1,
-            "pointSize": 5,
+            "pointSize": 2,
             "scaleDistribution": {
               "type": "linear"
             },
@@ -1592,30 +1782,7 @@
           },
           "unit": "percentunit"
         },
-        "overrides": [
-          {
-            "__systemRef": "hideSeriesFrom",
-            "matcher": {
-              "id": "byNames",
-              "options": {
-                "mode": "exclude",
-                "names": [],
-                "prefix": "All except:",
-                "readOnly": true
-              }
-            },
-            "properties": [
-              {
-                "id": "custom.hideFrom",
-                "value": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": true
-                }
-              }
-            ]
-          }
-        ]
+        "overrides": []
       },
       "gridPos": {
         "h": 9,
@@ -1623,7 +1790,7 @@
         "x": 0,
         "y": 59
       },
-      "id": 151,
+      "id": 51,
       "options": {
         "legend": {
           "calcs": [],
@@ -1638,31 +1805,36 @@
       "pluginVersion": "8.1.5",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
           "exemplar": true,
-          "expr": "(sum by (pod, interface) (increase(dubbo_request_success_total{application='trading-engine'}[2m])/120))/(sum by (pod, interface) (increase(dubbo_request_total{application='trading-engine'}[2m])/120))",
-          "hide": false,
+          "expr": "(sum by (namespace,pod, interface) (increase(dubbo_request_success_total{application='trading-engine'}[2m])/120))/(sum by (namespace,pod, interface) (increase(dubbo_request_total{application='trading-engine'}[2m])/120))",
           "instant": false,
           "interval": "",
           "legendFormat": "{{pod}}_{{interface}}",
-          "refId": "DubboRequestRatre"
+          "refId": "DubboRequestRate"
         }
       ],
       "thresholds": [
         {
           "colorMode": "critical",
           "op": "lt",
-          "value": 80,
+          "value": 0.95,
           "visible": true
         }
       ],
       "title": "Dubbo Request Success Rate",
+      "transparent": true,
       "type": "timeseries"
     },
     {
       "alert": {
         "alertRuleTags": {
           "application": "trading-engine",
-          "env": "prod"
+          "env": "beta"
         },
         "conditions": [
           {
@@ -1697,6 +1869,10 @@
         "noDataState": "no_data",
         "notifications": []
       },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1716,7 +1892,7 @@
             },
             "lineInterpolation": "linear",
             "lineWidth": 1,
-            "pointSize": 5,
+            "pointSize": 2,
             "scaleDistribution": {
               "type": "linear"
             },
@@ -1762,7 +1938,7 @@
         "x": 8,
         "y": 59
       },
-      "id": 157,
+      "id": 52,
       "options": {
         "legend": {
           "calcs": [],
@@ -1776,8 +1952,12 @@
       },
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
           "exemplar": true,
-          "expr": "sum by (pod, interface, method) (dubbo_request_latency_seconds{application='trading-engine', quantile='0.9'}*1000)",
+          "expr": "sum by (namespace,pod, interface, method) (dubbo_request_latency_seconds{application='trading-engine', quantile='0.9'}*1000)",
           "interval": "",
           "legendFormat": "{{pod}}_{{interface}}.{{method}}",
           "refId": "A"
@@ -1792,13 +1972,14 @@
         }
       ],
       "title": "Dubbo Request Latency",
+      "transparent": true,
       "type": "timeseries"
     },
     {
       "alert": {
         "alertRuleTags": {
           "application": "trading-engine",
-          "env": "prod"
+          "env": "beta"
         },
         "conditions": [
           {
@@ -1833,6 +2014,10 @@
         "noDataState": "no_data",
         "notifications": []
       },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1852,7 +2037,7 @@
             },
             "lineInterpolation": "linear",
             "lineWidth": 1,
-            "pointSize": 5,
+            "pointSize": 2,
             "scaleDistribution": {
               "type": "linear"
             },
@@ -1889,7 +2074,7 @@
         "x": 16,
         "y": 59
       },
-      "id": 159,
+      "id": 53,
       "options": {
         "legend": {
           "calcs": [],
@@ -1903,8 +2088,12 @@
       },
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
           "exemplar": true,
-          "expr": "sum by (pod, interface) (increase(dubbo_request_concurrent_total{application='trading-engine'}[2m])/120)",
+          "expr": "sum by (namespace,pod, interface) (increase(dubbo_request_concurrent_total{application='trading-engine'}[2m])/120)",
           "interval": "",
           "legendFormat": "{{pod}}_{{interface}}",
           "refId": "A"
@@ -1919,6 +2108,7 @@
         }
       ],
       "title": "Dubbo Request Concurrent",
+      "transparent": true,
       "type": "timeseries"
     },
     {
@@ -1935,6 +2125,15 @@
       },
       "id": 126,
       "panels": [],
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "HttpRequests Overview",
       "type": "row"
     },
@@ -1942,7 +2141,7 @@
       "alert": {
         "alertRuleTags": {
           "application": "trading-engine",
-          "env": "prod"
+          "env": "beta"
         },
         "conditions": [
           {
@@ -1973,7 +2172,7 @@
         "for": "5m",
         "frequency": "1m",
         "handler": 1,
-        "message": "{{uri}} is",
+        "message": "",
         "name": "Http Request Rate is High",
         "noDataState": "no_data",
         "notifications": []
@@ -2044,7 +2243,7 @@
         "x": 0,
         "y": 69
       },
-      "id": 111,
+      "id": 61,
       "links": [],
       "options": {
         "legend": {
@@ -2062,8 +2261,12 @@
       "pluginVersion": "8.1.5",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
           "exemplar": true,
-          "expr": "sum by (pod, uri) (rate(http_server_requests_seconds_count{application='trading-engine'}[2m]))",
+          "expr": "sum by (namespace,pod, uri) (rate(http_server_requests_seconds_count{application='trading-engine'}[2m]))",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -2080,13 +2283,14 @@
         }
       ],
       "title": "Http Request Rate",
+      "transparent": true,
       "type": "timeseries"
     },
     {
       "alert": {
         "alertRuleTags": {
           "application": "trading-engine",
-          "env": "prod"
+          "env": "beta"
         },
         "conditions": [
           {
@@ -2101,7 +2305,7 @@
             },
             "query": {
               "params": [
-                "A",
+                "avg_request_count",
                 "5m",
                 "now"
               ]
@@ -2114,7 +2318,7 @@
           }
         ],
         "executionErrorState": "keep_state",
-        "for": "3m",
+        "for": "5m",
         "frequency": "1m",
         "handler": 1,
         "message": "HTTP Request Duration > 300ms",
@@ -2192,7 +2396,7 @@
         "x": 8,
         "y": 69
       },
-      "id": 113,
+      "id": 62,
       "links": [],
       "options": {
         "legend": {
@@ -2210,24 +2414,32 @@
       "pluginVersion": "8.1.5",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
           "exemplar": true,
-          "expr": "sum by (pod, uri) (rate(http_server_requests_seconds_sum{application=\"trading-engine\", status!~\"5..\"}[2m]))/sum by (pod, uri) (rate(http_server_requests_seconds_count{application=\"trading-engine\", status!~\"5..\"}[2m]))",
+          "expr": "sum by (namespace,pod, uri) (rate(http_server_requests_seconds_sum{application=\"trading-engine\", status!~\"5..\"}[2m]))/sum by (namespace,pod, uri) (rate(http_server_requests_seconds_count{application=\"trading-engine\", status!~\"5..\"}[2m]))",
           "format": "time_series",
           "hide": false,
           "interval": "",
           "intervalFactor": 1,
           "legendFormat": "HTTP - AVG-  {{ pod}}-{{uri}}",
-          "refId": "A"
+          "refId": "avg_request_count"
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
           "exemplar": true,
-          "expr": "max by (pod, uri) (http_server_requests_seconds_max{application=\"trading-engine\", status!~\"5..\"})",
+          "expr": "max by (namespace,pod, uri) (http_server_requests_seconds_max{application=\"trading-engine\", status!~\"5..\"})",
           "format": "time_series",
           "hide": false,
           "interval": "",
           "intervalFactor": 1,
           "legendFormat": "HTTP - MAX  {{ pod}}-{{uri}}",
-          "refId": "B"
+          "refId": "max_request_count"
         }
       ],
       "thresholds": [
@@ -2239,11 +2451,15 @@
         }
       ],
       "title": "Duration",
+      "transparent": true,
       "type": "timeseries"
     },
     {
       "alert": {
-        "alertRuleTags": {},
+        "alertRuleTags": {
+          "application": "trading-engine",
+          "env": "beta"
+        },
         "conditions": [
           {
             "evaluator": {
@@ -2257,7 +2473,7 @@
             },
             "query": {
               "params": [
-                "A",
+                "5xx_count",
                 "5m",
                 "now"
               ]
@@ -2382,7 +2598,7 @@
         "x": 16,
         "y": 69
       },
-      "id": 112,
+      "id": 63,
       "links": [],
       "options": {
         "legend": {
@@ -2400,13 +2616,17 @@
       "pluginVersion": "8.1.5",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
           "exemplar": true,
-          "expr": "sum by (pod, uri) (rate(http_server_requests_seconds_count{application=\"trading-engine\", status=~\"5..\"}[2m]))",
+          "expr": "sum by (namespace,pod, uri) (rate(http_server_requests_seconds_count{application=\"trading-engine\", status=~\"5..\"}[2m]))",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
           "legendFormat": "HTTP - 5xx- {{pod}}_{{uri}}",
-          "refId": "A"
+          "refId": "5xx_count"
         }
       ],
       "thresholds": [
@@ -2417,7 +2637,8 @@
           "visible": true
         }
       ],
-      "title": "Htto-Errors-5xx",
+      "title": "Http-Errors-5xx",
+      "transparent": true,
       "type": "timeseries"
     },
     {
@@ -2434,10 +2655,57 @@
       },
       "id": 131,
       "panels": [],
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "Garbage Collection",
       "type": "row"
     },
     {
+      "alert": {
+        "alertRuleTags": {
+          "application": "trading-engine",
+          "env": "beta"
+        },
+        "conditions": [
+          {
+            "evaluator": {
+              "params": [
+                100
+              ],
+              "type": "gt"
+            },
+            "operator": {
+              "type": "and"
+            },
+            "query": {
+              "params": [
+                "MayjorGC",
+                "5m",
+                "now"
+              ]
+            },
+            "reducer": {
+              "params": [],
+              "type": "count_non_null"
+            },
+            "type": "query"
+          }
+        ],
+        "executionErrorState": "keep_state",
+        "for": "5m",
+        "frequency": "1m",
+        "handler": 1,
+        "name": "GC Count is high",
+        "noDataState": "no_data",
+        "notifications": []
+      },
       "datasource": {
         "type": "prometheus",
         "uid": "prometheus"
@@ -2500,7 +2768,7 @@
         "x": 0,
         "y": 79
       },
-      "id": 98,
+      "id": 71,
       "links": [],
       "options": {
         "legend": {
@@ -2516,20 +2784,83 @@
       "pluginVersion": "8.1.5",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
           "exemplar": true,
-          "expr": "avg by (pod, action, cause) (rate(jvm_gc_pause_seconds_count{application=\"trading-engine\"}[2m]))",
+          "expr": "avg by (namespace,pod, action, cause) (rate(jvm_gc_pause_seconds_count{application=\"trading-engine\"}[2m]))",
           "format": "time_series",
           "hide": false,
           "interval": "",
           "intervalFactor": 2,
           "legendFormat": "{{action}} ({{cause}})_{{pod}}",
           "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "exemplar": true,
+          "expr": "avg by (namespace,pod, cause) (rate(jvm_gc_pause_seconds_count{application=\"trading-engine\", action=\"end of major GC\"}[2m]))",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "MajorGC_{{pod}}",
+          "refId": "MayjorGC"
+        }
+      ],
+      "thresholds": [
+        {
+          "colorMode": "critical",
+          "op": "gt",
+          "value": 100,
+          "visible": true
         }
       ],
       "title": "Collections",
+      "transparent": true,
       "type": "timeseries"
     },
     {
+      "alert": {
+        "alertRuleTags": {
+          "application": "trading-engine",
+          "env": "beta"
+        },
+        "conditions": [
+          {
+            "evaluator": {
+              "params": [
+                0.4
+              ],
+              "type": "gt"
+            },
+            "operator": {
+              "type": "and"
+            },
+            "query": {
+              "params": [
+                "A",
+                "5m",
+                "now"
+              ]
+            },
+            "reducer": {
+              "params": [],
+              "type": "avg"
+            },
+            "type": "query"
+          }
+        ],
+        "executionErrorState": "alerting",
+        "for": "5m",
+        "frequency": "1m",
+        "handler": 1,
+        "name": "Pause Durations is High",
+        "noDataState": "no_data",
+        "notifications": []
+      },
       "datasource": {
         "type": "prometheus",
         "uid": "prometheus"
@@ -2592,7 +2923,7 @@
         "x": 8,
         "y": 79
       },
-      "id": 101,
+      "id": 72,
       "links": [],
       "options": {
         "legend": {
@@ -2608,8 +2939,12 @@
       "pluginVersion": "8.1.5",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
           "exemplar": true,
-          "expr": "avg by (pod, action, cause) (rate(jvm_gc_pause_seconds_sum{application=\"trading-engine\"}[2m])/rate(jvm_gc_pause_seconds_count{application=\"trading-engine\"}[2m]))",
+          "expr": "avg by (namespace,pod, action, cause) (rate(jvm_gc_pause_seconds_sum{application=\"trading-engine\"}[2m])/rate(jvm_gc_pause_seconds_count{application=\"trading-engine\"}[2m]))",
           "format": "time_series",
           "hide": false,
           "instant": false,
@@ -2619,8 +2954,12 @@
           "refId": "A"
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
           "exemplar": true,
-          "expr": "avg by (pod, action, cause) (jvm_gc_pause_seconds_max{application=\"trading-engine\"})",
+          "expr": "avg by (namespace,pod, action, cause) (jvm_gc_pause_seconds_max{application=\"trading-engine\"})",
           "format": "time_series",
           "hide": false,
           "instant": false,
@@ -2630,7 +2969,16 @@
           "refId": "B"
         }
       ],
+      "thresholds": [
+        {
+          "colorMode": "critical",
+          "op": "gt",
+          "value": 0.4,
+          "visible": true
+        }
+      ],
       "title": "Pause Durations",
+      "transparent": true,
       "type": "timeseries"
     },
     {
@@ -2696,7 +3044,7 @@
         "x": 16,
         "y": 79
       },
-      "id": 99,
+      "id": 73,
       "links": [],
       "options": {
         "legend": {
@@ -2712,6 +3060,10 @@
       "pluginVersion": "8.1.5",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
           "exemplar": true,
           "expr": "avg by (pod) (rate(jvm_gc_memory_allocated_bytes_total{application=\"trading-engine\"}[2m]))",
           "format": "time_series",
@@ -2721,6 +3073,10 @@
           "refId": "A"
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
           "exemplar": true,
           "expr": "avg by (pod) (rate(jvm_gc_memory_promoted_bytes_total{application=\"trading-engine\"}[2m]))",
           "format": "time_series",
@@ -2731,6 +3087,7 @@
         }
       ],
       "title": "Allocated/Promoted",
+      "transparent": true,
       "type": "timeseries"
     },
     {
@@ -2747,6 +3104,15 @@
       },
       "id": 128,
       "panels": [],
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "Container",
       "type": "row"
     },
@@ -2754,13 +3120,13 @@
       "alert": {
         "alertRuleTags": {
           "application": "trading-engine",
-          "env": "prod"
+          "env": "beta"
         },
         "conditions": [
           {
             "evaluator": {
               "params": [
-                80
+                0.8
               ],
               "type": "gt"
             },
@@ -2783,7 +3149,7 @@
           {
             "evaluator": {
               "params": [
-                80
+                0.8
               ],
               "type": "gt"
             },
@@ -2806,7 +3172,7 @@
           {
             "evaluator": {
               "params": [
-                80
+                0.8
               ],
               "type": "gt"
             },
@@ -2827,11 +3193,157 @@
             "type": "query"
           }
         ],
-        "executionErrorState": "alerting",
+        "executionErrorState": "keep_state",
         "for": "5m",
         "frequency": "1m",
         "handler": 1,
-        "name": "CPU alert",
+        "name": "CPU Usage is High",
+        "noDataState": "no_data",
+        "notifications": []
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "line+area"
+            }
+          },
+          "decimals": 1,
+          "mappings": [],
+          "max": 100,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "transparent",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 85
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 8,
+        "x": 0,
+        "y": 89
+      },
+      "id": 81,
+      "links": [],
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "8.1.5",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "exemplar": true,
+          "expr": "sum(irate(container_cpu_usage_seconds_total{container=\"trading-engine\"}[5m])*100)by(namespace,pod)/sum(container_spec_cpu_quota{container=\"trading-engine\"}/container_spec_cpu_period{container=\"trading-engine\"})by(namespace,pod)",
+          "format": "time_series",
+          "hide": false,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "{{pod}}",
+          "metric": "",
+          "range": true,
+          "refId": "system_cpu_usage",
+          "step": 2400
+        }
+      ],
+      "thresholds": [
+        {
+          "colorMode": "critical",
+          "op": "gt",
+          "value": 0.8,
+          "visible": true
+        }
+      ],
+      "title": "CPU",
+      "transparent": true,
+      "type": "timeseries"
+    },
+    {
+      "alert": {
+        "alertRuleTags": {},
+        "conditions": [
+          {
+            "evaluator": {
+              "params": [
+                4
+              ],
+              "type": "gt"
+            },
+            "operator": {
+              "type": "and"
+            },
+            "query": {
+              "params": [
+                "A",
+                "5m",
+                "now"
+              ]
+            },
+            "reducer": {
+              "params": [],
+              "type": "avg"
+            },
+            "type": "query"
+          }
+        ],
+        "executionErrorState": "keep_state",
+        "for": "5m",
+        "frequency": "1m",
+        "handler": 1,
+        "name": "Load is High",
         "noDataState": "no_data",
         "notifications": []
       },
@@ -2885,28 +3397,25 @@
               },
               {
                 "color": "red",
-                "value": 80
+                "value": 4
               }
             ]
           },
-          "unit": "percentunit"
+          "unit": "short"
         },
         "overrides": []
       },
       "gridPos": {
         "h": 9,
         "w": 8,
-        "x": 0,
+        "x": 8,
         "y": 89
       },
-      "id": 106,
+      "id": 82,
       "links": [],
       "options": {
         "legend": {
-          "calcs": [
-            "lastNotNull",
-            "max"
-          ],
+          "calcs": [],
           "displayMode": "list",
           "placement": "bottom"
         },
@@ -2918,156 +3427,33 @@
       "pluginVersion": "8.1.5",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
           "exemplar": true,
-          "expr": "avg by (pod) (system_cpu_usage{application=\"trading-engine\"})",
+          "expr": "sum(container_cpu_load_average_10s{container=\"trading-engine\"})by(namespace,pod)/sum(container_spec_cpu_quota{container=\"trading-engine\"}/container_spec_cpu_period{container=\"trading-engine\"})by(namespace,pod)/1000",
           "format": "time_series",
-          "hide": false,
           "interval": "",
-          "intervalFactor": 1,
-          "legendFormat": "system_{{pod}}",
+          "intervalFactor": 2,
+          "legendFormat": "{{pod}}",
           "metric": "",
-          "refId": "system_cpu_usage",
+          "range": true,
+          "refId": "A",
           "step": 2400
-        },
-        {
-          "exemplar": true,
-          "expr": "avg by (pod) (process_cpu_usage{application=\"trading-engine\"})",
-          "format": "time_series",
-          "hide": false,
-          "interval": "",
-          "intervalFactor": 1,
-          "legendFormat": "process_{{pod}}",
-          "refId": "process_cpu_usage"
-        },
-        {
-          "exemplar": true,
-          "expr": "avg by (pod) (avg_over_time(process_cpu_usage{application=\"trading-engine\"}[1h]))",
-          "format": "time_series",
-          "hide": false,
-          "interval": "",
-          "intervalFactor": 1,
-          "legendFormat": "process-1h_{{pod}}",
-          "refId": "process_cpu_usage_1h"
         }
       ],
-      "title": "CPU",
+      "title": "Load",
+      "transparent": true,
       "type": "timeseries"
     },
     {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": {
-        "type": "prometheus",
-        "uid": "prometheus"
-      },
-      "editable": true,
-      "error": false,
-      "fill": 1,
-      "fillGradient": 0,
-      "grid": {
-        "leftLogBase": 1,
-        "rightLogBase": 1
-      },
-      "gridPos": {
-        "h": 9,
-        "w": 8,
-        "x": 8,
-        "y": 89
-      },
-      "hiddenSeries": false,
-      "id": 93,
-      "legend": {
-        "avg": false,
-        "current": true,
-        "max": true,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": true
-      },
-      "lines": true,
-      "linewidth": 1,
-      "links": [],
-      "nullPointMode": "null",
-      "options": {
-        "alertThreshold": true
-      },
-      "percentage": false,
-      "pluginVersion": "8.4.2",
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "exemplar": true,
-          "expr": "avg by (pod) (system_load_average_1m{application='trading-engine'})",
-          "format": "time_series",
-          "interval": "",
-          "intervalFactor": 2,
-          "legendFormat": "system-1m-{{pod}}",
-          "metric": "",
-          "refId": "A",
-          "step": 2400
-        },
-        {
-          "exemplar": true,
-          "expr": "avg by (pod) (system_cpu_count{application='trading-engine'})",
-          "format": "time_series",
-          "interval": "",
-          "intervalFactor": 2,
-          "legendFormat": "cpu--{{pod}}",
-          "refId": "C"
-        }
-      ],
-      "thresholds": [],
-      "timeRegions": [],
-      "title": "Load",
-      "tooltip": {
-        "msResolution": false,
-        "shared": true,
-        "sort": 0,
-        "value_type": "cumulative"
-      },
-      "type": "graph",
-      "x-axis": true,
-      "xaxis": {
-        "mode": "time",
-        "show": true,
-        "values": []
-      },
-      "y-axis": true,
-      "y_formats": [
-        "short",
-        "short"
-      ],
-      "yaxes": [
-        {
-          "decimals": 1,
-          "format": "short",
-          "label": "",
-          "logBase": 1,
-          "min": 0,
-          "show": true
-        },
-        {
-          "format": "short",
-          "logBase": 1,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false
-      }
-    },
-    {
       "alert": {
-        "alertRuleTags": {},
+        "alertRuleTags": {
+          "application": "trading-engine",
+          "env": "beta"
+        },
         "conditions": [
           {
             "evaluator": {
@@ -3097,31 +3483,142 @@
         "for": "5m",
         "frequency": "1m",
         "handler": 1,
-        "name": "Log Events (2m)-Error alert",
+        "name": "Log Events (2m)-Error is High",
         "noDataState": "no_data",
         "notifications": []
       },
-      "aliasColors": {
-        "debug": "#1F78C1",
-        "error": "#BF1B00",
-        "info": "#508642",
-        "trace": "#6ED0E0",
-        "warn": "#EAB839"
-      },
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
       "datasource": {
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "editable": true,
-      "error": false,
-      "fill": 1,
-      "fillGradient": 0,
-      "grid": {
-        "leftLogBase": 1,
-        "rightLogBase": 1
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "line+area"
+            }
+          },
+          "decimals": 0,
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "transparent",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 500
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "debug"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#1F78C1",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "error"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#BF1B00",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "info"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#508642",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "trace"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#6ED0E0",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "warn"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#EAB839",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 9,
@@ -3129,56 +3626,35 @@
         "x": 16,
         "y": 89
       },
-      "height": "",
-      "hiddenSeries": false,
-      "id": 91,
-      "legend": {
-        "alignAsTable": false,
-        "avg": false,
-        "current": true,
-        "hideEmpty": false,
-        "hideZero": false,
-        "max": true,
-        "min": false,
-        "rightSide": false,
-        "show": true,
-        "total": false,
-        "values": true
-      },
-      "lines": true,
-      "linewidth": 1,
+      "id": 83,
       "links": [],
-      "nullPointMode": "null",
       "options": {
-        "alertThreshold": true
-      },
-      "percentage": true,
-      "pluginVersion": "8.4.2",
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [
-        {
-          "alias": "error",
-          "yaxis": 1
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom"
         },
-        {
-          "alias": "warn",
-          "yaxis": 1
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
         }
-      ],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
+      },
+      "pluginVersion": "8.1.5",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
           "exemplar": true,
           "expr": "increase(log4j2_events_total{application='trading-engine', level =~'error|warn'}[2m])",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
-          "legendFormat": "{{instance}}_{{level}}",
+          "legendFormat": "{{namespace}}_{{pod}}_{{level}}",
           "metric": "",
+          "range": true,
           "refId": "A",
           "step": 1200
         }
@@ -3186,52 +3662,54 @@
       "thresholds": [
         {
           "colorMode": "critical",
-          "fill": true,
-          "line": true,
           "op": "gt",
           "value": 200,
           "visible": true
         }
       ],
-      "timeRegions": [],
       "title": "Log Events (2m)-Error",
-      "tooltip": {
-        "msResolution": false,
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "x-axis": true,
-      "xaxis": {
-        "mode": "time",
-        "show": true,
-        "values": []
-      },
-      "y-axis": true,
-      "y_formats": [
-        "short",
-        "short"
-      ],
-      "yaxes": [
-        {
-          "decimals": 0,
-          "format": "short",
-          "logBase": 1,
-          "min": "0",
-          "show": true
-        },
-        {
-          "format": "short",
-          "logBase": 1,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false
-      }
+      "transparent": true,
+      "type": "timeseries"
     },
     {
+      "alert": {
+        "alertRuleTags": {
+          "application": "trading-engine",
+          "env": "beta"
+        },
+        "conditions": [
+          {
+            "evaluator": {
+              "params": [
+                4
+              ],
+              "type": "gt"
+            },
+            "operator": {
+              "type": "and"
+            },
+            "query": {
+              "params": [
+                "blockThread",
+                "5m",
+                "now"
+              ]
+            },
+            "reducer": {
+              "params": [],
+              "type": "avg"
+            },
+            "type": "query"
+          }
+        ],
+        "executionErrorState": "alerting",
+        "for": "5m",
+        "frequency": "1m",
+        "handler": 1,
+        "name": "Block Thread  Count is High",
+        "noDataState": "no_data",
+        "notifications": []
+      },
       "datasource": {
         "type": "prometheus",
         "uid": "prometheus"
@@ -3278,8 +3756,12 @@
                 "value": null
               },
               {
+                "color": "yellow",
+                "value": 300
+              },
+              {
                 "color": "red",
-                "value": 80
+                "value": 400
               }
             ]
           },
@@ -3384,14 +3866,11 @@
         "x": 0,
         "y": 98
       },
-      "id": 124,
+      "id": 84,
       "links": [],
       "options": {
         "legend": {
-          "calcs": [
-            "lastNotNull",
-            "max"
-          ],
+          "calcs": [],
           "displayMode": "list",
           "placement": "bottom"
         },
@@ -3403,19 +3882,151 @@
       "pluginVersion": "8.1.5",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
           "exemplar": true,
-          "expr": "sum by (pod, state) (jvm_threads_states_threads{application='trading-engine'})",
+          "expr": "sum(jvm_threads_states_threads{application='trading-engine'}) by (pod,namespace,state)",
           "format": "time_series",
+          "hide": false,
           "interval": "",
           "intervalFactor": 2,
           "legendFormat": "{{pod}}_{{state}}",
           "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "exemplar": true,
+          "expr": "sum(jvm_threads_states_threads{application='trading-engine',state='blocked'}) by (pod,namespace)",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "block_thread_{{pod}}",
+          "refId": "blockThread"
+        }
+      ],
+      "thresholds": [
+        {
+          "colorMode": "critical",
+          "op": "gt",
+          "value": 4,
+          "visible": true
         }
       ],
       "title": "Thread States",
+      "transparent": true,
       "type": "timeseries"
     },
     {
+      "alert": {
+        "alertRuleTags": {
+          "application": "trading-engine"
+        },
+        "conditions": [
+          {
+            "evaluator": {
+              "params": [
+                600
+              ],
+              "type": "gt"
+            },
+            "operator": {
+              "type": "and"
+            },
+            "query": {
+              "params": [
+                "A",
+                "5m",
+                "now"
+              ]
+            },
+            "reducer": {
+              "params": [],
+              "type": "avg"
+            },
+            "type": "query"
+          },
+          {
+            "evaluator": {
+              "params": [
+                600
+              ],
+              "type": "gt"
+            },
+            "operator": {
+              "type": "and"
+            },
+            "query": {
+              "params": [
+                "B",
+                "5m",
+                "now"
+              ]
+            },
+            "reducer": {
+              "params": [],
+              "type": "avg"
+            },
+            "type": "query"
+          },
+          {
+            "evaluator": {
+              "params": [
+                600
+              ],
+              "type": "gt"
+            },
+            "operator": {
+              "type": "and"
+            },
+            "query": {
+              "params": [
+                "C",
+                "5m",
+                "now"
+              ]
+            },
+            "reducer": {
+              "params": [],
+              "type": "avg"
+            },
+            "type": "query"
+          },
+          {
+            "evaluator": {
+              "params": [
+                600
+              ],
+              "type": "gt"
+            },
+            "operator": {
+              "type": "and"
+            },
+            "query": {
+              "params": [
+                "D",
+                "5m",
+                "now"
+              ]
+            },
+            "reducer": {
+              "params": [],
+              "type": "avg"
+            },
+            "type": "query"
+          }
+        ],
+        "executionErrorState": "keep_state",
+        "for": "5m",
+        "frequency": "1m",
+        "handler": 1,
+        "name": "Threads Count is High",
+        "noDataState": "no_data",
+        "notifications": []
+      },
       "datasource": {
         "type": "prometheus",
         "uid": "prometheus"
@@ -3464,8 +4075,12 @@
                 "value": null
               },
               {
+                "color": "yellow",
+                "value": 500
+              },
+              {
                 "color": "red",
-                "value": 80
+                "value": 600
               }
             ]
           },
@@ -3479,14 +4094,11 @@
         "x": 8,
         "y": 98
       },
-      "id": 32,
+      "id": 85,
       "links": [],
       "options": {
         "legend": {
-          "calcs": [
-            "lastNotNull",
-            "max"
-          ],
+          "calcs": [],
           "displayMode": "list",
           "placement": "bottom"
         },
@@ -3498,9 +4110,14 @@
       "pluginVersion": "8.1.5",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
           "exemplar": true,
-          "expr": "sum by (pod) (jvm_threads_live_threads{application=\"trading-engine\"})",
+          "expr": "sum by (namespace,pod) (jvm_threads_live_threads{application=\"trading-engine\"})",
           "format": "time_series",
+          "hide": false,
           "interval": "",
           "intervalFactor": 2,
           "legendFormat": "live_{{pod}}",
@@ -3509,9 +4126,14 @@
           "step": 2400
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
           "exemplar": true,
-          "expr": " sum by (pod) (jvm_threads_daemon_threads{application=\"trading-engine\"})",
+          "expr": " sum by (namespace,pod) (jvm_threads_daemon_threads{application=\"trading-engine\"})",
           "format": "time_series",
+          "hide": true,
           "interval": "",
           "intervalFactor": 2,
           "legendFormat": "daemon_{{pod}}",
@@ -3520,9 +4142,14 @@
           "step": 2400
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
           "exemplar": true,
-          "expr": " sum by (pod) (jvm_threads_peak_threads{application=\"trading-engine\"})",
+          "expr": " sum by (namespace,pod) (jvm_threads_peak_threads{application=\"trading-engine\"})",
           "format": "time_series",
+          "hide": true,
           "interval": "",
           "intervalFactor": 2,
           "legendFormat": "peak_{{pod}}",
@@ -3530,9 +4157,14 @@
           "step": 2400
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
           "exemplar": true,
-          "expr": "sum by (pod) (jvm_threads_states_threads{application=\"trading-engine\"})",
+          "expr": "sum by (namespace,pod) (jvm_threads_states_threads{application=\"trading-engine\"})",
           "format": "time_series",
+          "hide": true,
           "interval": "",
           "intervalFactor": 2,
           "legendFormat": "process_{{pod}}",
@@ -3540,10 +4172,84 @@
           "step": 2400
         }
       ],
+      "thresholds": [
+        {
+          "colorMode": "critical",
+          "op": "gt",
+          "value": 600,
+          "visible": true
+        }
+      ],
       "title": "Threads",
+      "transparent": true,
       "type": "timeseries"
     },
     {
+      "alert": {
+        "alertRuleTags": {
+          "application": "trading-engine",
+          "env": "prod"
+        },
+        "conditions": [
+          {
+            "evaluator": {
+              "params": [
+                1
+              ],
+              "type": "gt"
+            },
+            "operator": {
+              "type": "and"
+            },
+            "query": {
+              "params": [
+                "restart",
+                "5m",
+                "now"
+              ]
+            },
+            "reducer": {
+              "params": [],
+              "type": "sum"
+            },
+            "type": "query"
+          },
+          {
+            "evaluator": {
+              "params": [
+                1
+              ],
+              "type": "gt"
+            },
+            "operator": {
+              "type": "or"
+            },
+            "query": {
+              "params": [
+                "oom",
+                "5m",
+                "now"
+              ]
+            },
+            "reducer": {
+              "params": [],
+              "type": "sum"
+            },
+            "type": "query"
+          }
+        ],
+        "executionErrorState": "keep_state",
+        "for": "1m",
+        "frequency": "1m",
+        "handler": 1,
+        "name": "Pod Restart or OOM alert",
+        "noDataState": "no_data",
+        "notifications": []
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -3564,7 +4270,7 @@
             },
             "lineInterpolation": "linear",
             "lineWidth": 1,
-            "pointSize": 5,
+            "pointSize": 2,
             "scaleDistribution": {
               "type": "linear"
             },
@@ -3588,7 +4294,7 @@
               },
               {
                 "color": "red",
-                "value": 80
+                "value": 1
               }
             ]
           }
@@ -3601,7 +4307,7 @@
         "x": 16,
         "y": 98
       },
-      "id": 184,
+      "id": 86,
       "options": {
         "legend": {
           "calcs": [],
@@ -3615,22 +4321,43 @@
       },
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
           "exemplar": true,
-          "expr": "sum by (container) (increase(kube_pod_container_status_restarts_total{container='trading-engine'}[10m]))",
+          "expr": "sum by (container,pod,namespace) (increase(kube_pod_container_status_restarts_total{container='trading-engine'}[10m]))",
           "interval": "",
-          "legendFormat": "restart {{container}}",
-          "refId": "A"
+          "legendFormat": "restart_{{namespace}}_{{pod}}",
+          "range": true,
+          "refId": "restart"
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
           "exemplar": true,
-          "expr": "kube_pod_container_status_last_terminated_reason{container='trading-engine', reason=\"OOMKilled\"}",
+          "expr": "sum by (container,pod,namespace) (increase(kube_pod_container_status_last_terminated_reason{container='trading-engine', reason=\"OOMKilled\"}[10m]))",
           "hide": false,
           "interval": "",
-          "legendFormat": "OOM {{pod}}",
-          "refId": "B"
+          "legendFormat": "OOM_{{namespace}}_{{pod}}",
+          "range": true,
+          "refId": "oom"
+        }
+      ],
+      "thresholds": [
+        {
+          "colorMode": "critical",
+          "op": "gt",
+          "value": 1,
+          "visible": true
         }
       ],
       "title": "Pod Restart or OOM",
+      "transparent": true,
       "type": "timeseries"
     },
     {
@@ -3647,6 +4374,15 @@
       },
       "id": 132,
       "panels": [],
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "Classloading",
       "type": "row"
     },
@@ -3713,7 +4449,7 @@
         "x": 0,
         "y": 108
       },
-      "id": 37,
+      "id": 91,
       "links": [],
       "options": {
         "legend": {
@@ -3729,6 +4465,10 @@
       "pluginVersion": "8.1.5",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
           "exemplar": true,
           "expr": " sum by (pod) (jvm_classes_loaded_classes{application=\"trading-engine\"})",
           "format": "time_series",
@@ -3741,24 +4481,64 @@
         }
       ],
       "title": "Classes loaded",
+      "transparent": true,
       "type": "timeseries"
     },
     {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
       "datasource": {
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "editable": true,
-      "error": false,
-      "fill": 1,
-      "fillGradient": 0,
-      "grid": {
-        "leftLogBase": 1,
-        "rightLogBase": 1
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
       },
       "gridPos": {
         "h": 7,
@@ -3766,35 +4546,26 @@
         "x": 12,
         "y": 108
       },
-      "hiddenSeries": false,
-      "id": 38,
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
+      "id": 92,
       "links": [],
-      "nullPointMode": "null",
       "options": {
-        "alertThreshold": true
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
       },
-      "percentage": false,
-      "pluginVersion": "8.4.2",
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
+      "pluginVersion": "9.0.5",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
           "exemplar": true,
           "expr": " sum by (pod) (delta(jvm_classes_loaded_classes{application=\"trading-engine\"}[5m]))",
           "format": "time_series",
@@ -3807,43 +4578,9 @@
           "step": 1200
         }
       ],
-      "thresholds": [],
-      "timeRegions": [],
       "title": "Class delta (5m)",
-      "tooltip": {
-        "msResolution": false,
-        "shared": true,
-        "sort": 0,
-        "value_type": "cumulative"
-      },
-      "type": "graph",
-      "x-axis": true,
-      "xaxis": {
-        "mode": "time",
-        "show": true,
-        "values": []
-      },
-      "y-axis": true,
-      "y_formats": [
-        "ops",
-        "short"
-      ],
-      "yaxes": [
-        {
-          "format": "short",
-          "label": "",
-          "logBase": 1,
-          "show": true
-        },
-        {
-          "format": "short",
-          "logBase": 1,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false
-      }
+      "transparent": true,
+      "type": "timeseries"
     },
     {
       "collapsed": false,
@@ -3859,6 +4596,15 @@
       },
       "id": 133,
       "panels": [],
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "Buffer Pools",
       "type": "row"
     },
@@ -3925,7 +4671,7 @@
         "x": 0,
         "y": 116
       },
-      "id": 33,
+      "id": 101,
       "links": [],
       "options": {
         "legend": {
@@ -3941,6 +4687,10 @@
       "pluginVersion": "8.1.5",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
           "exemplar": true,
           "expr": "avg by (pod) (jvm_buffer_memory_used_bytes{application=\"trading-engine\", id=\"direct\"})",
           "format": "time_series",
@@ -3952,6 +4702,10 @@
           "step": 2400
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
           "exemplar": true,
           "expr": "jvm_buffer_total_capacity_bytes{application=\"trading-engine\", id=\"direct\"}",
           "format": "time_series",
@@ -3964,6 +4718,7 @@
         }
       ],
       "title": "Direct Buffers",
+      "transparent": true,
       "type": "timeseries"
     },
     {
@@ -4030,7 +4785,7 @@
         "x": 6,
         "y": 116
       },
-      "id": 83,
+      "id": 102,
       "links": [],
       "options": {
         "legend": {
@@ -4046,18 +4801,25 @@
       "pluginVersion": "8.1.5",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
           "exemplar": true,
           "expr": "jvm_buffer_count_buffers{application=\"trading-engine\", id=\"direct\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
-          "legendFormat": "count",
+          "legendFormat": "count_{{pod}}",
           "metric": "",
+          "range": true,
           "refId": "A",
           "step": 2400
         }
       ],
       "title": "Direct Buffers",
+      "transparent": true,
       "type": "timeseries"
     },
     {
@@ -4123,7 +4885,7 @@
         "x": 12,
         "y": 116
       },
-      "id": 85,
+      "id": 103,
       "links": [],
       "options": {
         "legend": {
@@ -4139,6 +4901,10 @@
       "pluginVersion": "8.1.5",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
           "exemplar": true,
           "expr": "avg by (pod) (jvm_buffer_memory_used_bytes{application=\"trading-engine\", id=\"mapped\"})",
           "format": "time_series",
@@ -4150,6 +4916,10 @@
           "step": 2400
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
           "exemplar": true,
           "expr": "avg by (pod) (jvm_buffer_total_capacity_bytes{application=\"trading-engine\", id=\"mapped\"})",
           "format": "time_series",
@@ -4162,6 +4932,7 @@
         }
       ],
       "title": "Mapped Buffers",
+      "transparent": true,
       "type": "timeseries"
     },
     {
@@ -4228,7 +4999,7 @@
         "x": 18,
         "y": 116
       },
-      "id": 84,
+      "id": 104,
       "links": [],
       "options": {
         "legend": {
@@ -4244,6 +5015,10 @@
       "pluginVersion": "8.1.5",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
           "exemplar": true,
           "expr": "avg by (pod) (jvm_buffer_count_buffers{application=\"trading-engine\", id=\"mapped\"})",
           "format": "time_series",
@@ -4256,11 +5031,12 @@
         }
       ],
       "title": "Mapped Buffers count",
+      "transparent": true,
       "type": "timeseries"
     }
   ],
   "refresh": "",
-  "schemaVersion": 35,
+  "schemaVersion": 36,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -4268,16 +5044,47 @@
       {
         "allFormat": "glob",
         "current": {
-          "isNone": true,
           "selected": false,
-          "text": "None",
-          "value": ""
+          "text": "kikitrade-prod",
+          "value": "kikitrade-prod"
         },
         "datasource": {
           "type": "prometheus",
           "uid": "prometheus"
         },
-        "definition": "label_values(container_memory_usage_bytes{container=~\"trading-engine\", }, pod)",
+        "definition": "label_values(container_memory_usage_bytes{container=\"trading-engine\", }, namespace)",
+        "hide": 0,
+        "includeAll": false,
+        "label": "namespace",
+        "multi": false,
+        "multiFormat": "glob",
+        "name": "namespace",
+        "options": [],
+        "query": {
+          "query": "label_values(container_memory_usage_bytes{container=\"trading-engine\", }, namespace)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allFormat": "glob",
+        "current": {
+          "selected": false,
+          "text": "blue-trading-engine-858f56774d-jkszg",
+          "value": "blue-trading-engine-858f56774d-jkszg"
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "prometheus"
+        },
+        "definition": "label_values(container_memory_usage_bytes{container=\"trading-engine\", namespace=\"$namespace\"}, pod)",
         "hide": 0,
         "includeAll": false,
         "label": "pod",
@@ -4286,7 +5093,7 @@
         "name": "pod",
         "options": [],
         "query": {
-          "query": "label_values(container_memory_usage_bytes{container=~\"trading-engine\", }, pod)",
+          "query": "label_values(container_memory_usage_bytes{container=\"trading-engine\", namespace=\"$namespace\"}, pod)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 2,
@@ -4309,7 +5116,7 @@
           "type": "prometheus",
           "uid": "prometheus"
         },
-        "definition": "label_values(jvm_memory_used_bytes{pod=\"$pod\", area=\"heap\"},id)",
+        "definition": "label_values(jvm_memory_used_bytes{pod=\"$pod\", area=\"heap\",},id)",
         "hide": 0,
         "includeAll": true,
         "label": "JVM Memory Pools Heap",
@@ -4318,7 +5125,7 @@
         "name": "jvm_memory_pool_heap",
         "options": [],
         "query": {
-          "query": "label_values(jvm_memory_used_bytes{pod=\"$pod\", area=\"heap\"},id)",
+          "query": "label_values(jvm_memory_used_bytes{pod=\"$pod\", area=\"heap\",},id)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 1,
@@ -4341,7 +5148,7 @@
           "type": "prometheus",
           "uid": "prometheus"
         },
-        "definition": "label_values(jvm_memory_used_bytes{pod=\"$pod\", area=\"nonheap\"},id)",
+        "definition": "label_values(jvm_memory_used_bytes{pod=\"$pod\", area=\"nonheap\",},id)",
         "hide": 0,
         "includeAll": true,
         "label": "JVM Memory Pools Non-Heap",
@@ -4350,7 +5157,7 @@
         "name": "jvm_memory_pool_nonheap",
         "options": [],
         "query": {
-          "query": "label_values(jvm_memory_used_bytes{pod=\"$pod\", area=\"nonheap\"},id)",
+          "query": "label_values(jvm_memory_used_bytes{pod=\"$pod\", area=\"nonheap\",},id)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 1,
@@ -4365,7 +5172,7 @@
     ]
   },
   "time": {
-    "from": "now-3h",
+    "from": "now-12h",
     "to": "now"
   },
   "timepicker": {
@@ -4396,7 +5203,7 @@
   },
   "timezone": "browser",
   "title": "trading-engine",
-  "uid": "trading-engine67890",
-  "version": 1,
+  "uid": "trading-engine",
+  "version": 73,
   "weekStart": ""
 }

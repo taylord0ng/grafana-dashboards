@@ -3,7 +3,10 @@
     "list": [
       {
         "builtIn": 1,
-        "datasource": "-- Grafana --",
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
@@ -19,7 +22,10 @@
         "type": "dashboard"
       },
       {
-        "datasource": "prometheus",
+        "datasource": {
+          "type": "prometheus",
+          "uid": "prometheus"
+        },
         "enable": true,
         "expr": "resets(process_uptime_seconds{instance=\"$instance\"}[1m]) > 0",
         "iconColor": "rgba(255, 96, 96, 1)",
@@ -37,8 +43,7 @@
   "fiscalYearStartMonth": 0,
   "gnetId": 13694,
   "graphTooltip": 1,
-  "id": 749,
-  "iteration": 1648115670849,
+  "id": 28,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -57,6 +62,15 @@
       "id": 125,
       "panels": [],
       "repeat": "pod",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "Quick Facts",
       "type": "row"
     },
@@ -94,7 +108,7 @@
         "x": 0,
         "y": 1
       },
-      "id": 63,
+      "id": 11,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -112,11 +126,15 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.4.2",
+      "pluginVersion": "9.0.8",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
           "exemplar": true,
-          "expr": "process_uptime_seconds{application='krisk', pod='$pod'}",
+          "expr": "process_uptime_seconds{application=\"krisk\",namespace=\"$namespace\",pod=\"$pod\"}",
           "format": "time_series",
           "instant": false,
           "interval": "",
@@ -128,6 +146,7 @@
         }
       ],
       "title": "Uptime $pod",
+      "transparent": true,
       "type": "stat"
     },
     {
@@ -174,7 +193,7 @@
         "x": 8,
         "y": 1
       },
-      "id": 92,
+      "id": 12,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -194,9 +213,13 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "8.4.2",
+      "pluginVersion": "9.0.8",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
           "exemplar": true,
           "expr": "process_start_time_seconds{application='krisk', pod='$pod'}*1000",
           "format": "time_series",
@@ -210,6 +233,7 @@
         }
       ],
       "title": "Start time $pod",
+      "transparent": true,
       "type": "stat"
     },
     {
@@ -247,6 +271,10 @@
         "name": "Cpu load 10s alert",
         "noDataState": "no_data",
         "notifications": []
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -312,7 +340,7 @@
         "x": 16,
         "y": 1
       },
-      "id": 171,
+      "id": 13,
       "maxDataPoints": 800,
       "options": {
         "legend": {
@@ -327,6 +355,10 @@
       },
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
           "exemplar": true,
           "expr": "container_cpu_load_average_10s{container='krisk', pod='$pod'}",
           "interval": "",
@@ -343,6 +375,7 @@
         }
       ],
       "title": "Cpu load 10s $pod",
+      "transparent": true,
       "type": "timeseries"
     },
     {
@@ -369,7 +402,7 @@
             },
             "lineInterpolation": "linear",
             "lineWidth": 1,
-            "pointSize": 5,
+            "pointSize": 2,
             "scaleDistribution": {
               "type": "linear"
             },
@@ -380,10 +413,10 @@
               "mode": "none"
             },
             "thresholdsStyle": {
-              "mode": "off"
+              "mode": "line"
             }
           },
-          "decimals": 2,
+          "decimals": 1,
           "mappings": [
             {
               "options": {
@@ -395,6 +428,8 @@
               "type": "special"
             }
           ],
+          "max": 1,
+          "min": 0,
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -403,16 +438,12 @@
                 "value": null
               },
               {
-                "color": "rgba(237, 129, 40, 0.89)",
-                "value": 70
-              },
-              {
                 "color": "rgba(245, 54, 54, 0.9)",
-                "value": 90
+                "value": 0.8
               }
             ]
           },
-          "unit": "percent"
+          "unit": "percentunit"
         },
         "overrides": []
       },
@@ -422,7 +453,7 @@
         "x": 0,
         "y": 10
       },
-      "id": 65,
+      "id": 14,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -439,17 +470,24 @@
       "pluginVersion": "8.1.5",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
           "exemplar": true,
-          "expr": "sum(jvm_memory_used_bytes{ area=\"heap\"})*100/sum(jvm_memory_max_bytes{ area=\"heap\"})",
+          "expr": "sum(jvm_memory_used_bytes{area=\"heap\",application=\"krisk\",pod=\"$pod\",namespace=\"$namespace\"})/sum(jvm_memory_max_bytes{area=\"heap\",application=\"krisk\",pod=\"$pod\",namespace=\"$namespace\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
-          "legendFormat": "HeapUsed_$pod",
+          "legendFormat": "Heap_$pod",
+          "range": true,
           "refId": "A",
           "step": 14400
         }
       ],
       "title": " Heap used $pod",
+      "transparent": true,
       "type": "timeseries"
     },
     {
@@ -476,7 +514,7 @@
             },
             "lineInterpolation": "linear",
             "lineWidth": 1,
-            "pointSize": 5,
+            "pointSize": 2,
             "scaleDistribution": {
               "type": "linear"
             },
@@ -487,10 +525,10 @@
               "mode": "none"
             },
             "thresholdsStyle": {
-              "mode": "off"
+              "mode": "line"
             }
           },
-          "decimals": 2,
+          "decimals": 1,
           "mappings": [
             {
               "options": {
@@ -512,6 +550,8 @@
               "type": "range"
             }
           ],
+          "max": 1,
+          "min": 0,
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -520,16 +560,12 @@
                 "value": null
               },
               {
-                "color": "rgba(237, 129, 40, 0.89)",
-                "value": 70
-              },
-              {
                 "color": "rgba(245, 54, 54, 0.9)",
-                "value": 90
+                "value": 0.8
               }
             ]
           },
-          "unit": "percent"
+          "unit": "percentunit"
         },
         "overrides": []
       },
@@ -539,7 +575,7 @@
         "x": 8,
         "y": 10
       },
-      "id": 75,
+      "id": 15,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -556,8 +592,12 @@
       "pluginVersion": "8.1.5",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
           "exemplar": true,
-          "expr": "sum(jvm_memory_used_bytes{ area=\"nonheap\"})*100/sum(jvm_memory_max_bytes{ area=\"nonheap\"})",
+          "expr": "sum(jvm_memory_used_bytes{area=\"nonheap\",pod=\"$pod\",namespace=\"$namespace\"})/sum(jvm_memory_max_bytes{ area=\"nonheap\",pod=\"$pod\",namespace=\"$namespace\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -567,6 +607,7 @@
         }
       ],
       "title": "Non-Heap used $pod",
+      "transparent": true,
       "type": "timeseries"
     },
     {
@@ -584,6 +625,15 @@
       "id": 129,
       "panels": [],
       "repeat": "pod",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "JVM Memory Pools (Heap)",
       "type": "row"
     },
@@ -611,7 +661,7 @@
         "y": 20
       },
       "hiddenSeries": false,
-      "id": 3,
+      "id": 21,
       "legend": {
         "alignAsTable": false,
         "avg": false,
@@ -632,7 +682,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.4.2",
+      "pluginVersion": "9.0.8",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -643,6 +693,10 @@
       "steppedLine": false,
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
           "exemplar": true,
           "expr": "jvm_memory_committed_bytes{pod=\"$pod\", id=\"$jvm_memory_pool_heap\"}",
           "format": "time_series",
@@ -655,6 +709,10 @@
           "step": 1800
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
           "exemplar": true,
           "expr": "jvm_memory_max_bytes{pod=\"$pod\", id=\"$jvm_memory_pool_heap\"}",
           "format": "time_series",
@@ -676,6 +734,7 @@
         "sort": 0,
         "value_type": "cumulative"
       },
+      "transparent": true,
       "type": "graph",
       "x-axis": true,
       "xaxis": {
@@ -719,6 +778,15 @@
       },
       "id": 127,
       "panels": [],
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "JVM Memory",
       "type": "row"
     },
@@ -785,12 +853,12 @@
         "x": 0,
         "y": 30
       },
-      "id": 24,
+      "id": 31,
       "links": [],
       "options": {
         "legend": {
           "calcs": [
-            "lastNotNull",
+            "last",
             "max"
           ],
           "displayMode": "list",
@@ -804,38 +872,57 @@
       "pluginVersion": "8.1.5",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
           "exemplar": true,
-          "expr": "sum by (pod) (jvm_memory_used_bytes{application=\"krisk\", area=\"heap\"})",
+          "expr": "sum by (pod) (jvm_memory_used_bytes{application=\"krisk\", area=\"heap\",pod=\"$pod\",namespace=\"$namespace\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
-          "legendFormat": "heap_used_{{pod}}",
+          "legendFormat": "heap_used",
           "metric": "",
+          "range": true,
           "refId": "A",
           "step": 2400
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
           "exemplar": true,
-          "expr": "sum by (pod) (jvm_memory_committed_bytes{application=\"krisk\", area=\"heap\"})",
+          "expr": "sum by (pod) (jvm_memory_committed_bytes{application=\"krisk\", area=\"heap\",pod=\"$pod\",namespace=\"$namespace\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
-          "legendFormat": "committed_{{pod}}",
+          "legendFormat": "committed",
+          "range": true,
           "refId": "B",
           "step": 2400
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
           "exemplar": true,
-          "expr": "sum by (pod) (jvm_memory_max_bytes{application=\"krisk\", area=\"heap\"})",
+          "expr": "sum by (pod) (jvm_memory_max_bytes{application=\"krisk\", area=\"heap\",pod=\"$pod\",namespace=\"$namespace\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
-          "legendFormat": "max_{{pod}}",
+          "legendFormat": "max",
+          "range": true,
           "refId": "C",
           "step": 2400
         }
       ],
       "title": "JVM Heap",
+      "transparent": true,
       "type": "timeseries"
     },
     {
@@ -901,12 +988,12 @@
         "x": 8,
         "y": 30
       },
-      "id": 25,
+      "id": 32,
       "links": [],
       "options": {
         "legend": {
           "calcs": [
-            "lastNotNull",
+            "last",
             "max"
           ],
           "displayMode": "list",
@@ -920,38 +1007,57 @@
       "pluginVersion": "8.1.5",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
           "exemplar": true,
-          "expr": "sum by (pod)(jvm_memory_used_bytes{application='krisk', area=\"nonheap\"})",
+          "expr": "sum by (pod)(jvm_memory_used_bytes{application='krisk', area=\"nonheap\",pod=\"$pod\",namespace=\"$namespace\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
-          "legendFormat": "used_{{pod}}",
+          "legendFormat": "used",
           "metric": "",
+          "range": true,
           "refId": "A",
           "step": 2400
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
           "exemplar": true,
-          "expr": "sum by (pod) (jvm_memory_committed_bytes{application='krisk', area=\"nonheap\"})",
+          "expr": "sum by (pod) (jvm_memory_committed_bytes{application='krisk', area=\"nonheap\",pod=\"$pod\",namespace=\"$namespace\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
-          "legendFormat": "committed_{{pod}}",
+          "legendFormat": "committed",
+          "range": true,
           "refId": "B",
           "step": 2400
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
           "exemplar": true,
-          "expr": "sum by (pod) (jvm_memory_max_bytes{application='krisk', area=\"nonheap\"})",
+          "expr": "sum by (pod) (jvm_memory_max_bytes{application='krisk', area=\"nonheap\",pod=\"$pod\",namespace=\"$namespace\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
-          "legendFormat": "max_{{pod}}",
+          "legendFormat": "max",
+          "range": true,
           "refId": "C",
           "step": 2400
         }
       ],
       "title": "JVM Non-Heap",
+      "transparent": true,
       "type": "timeseries"
     },
     {
@@ -1017,12 +1123,12 @@
         "x": 16,
         "y": 30
       },
-      "id": 26,
+      "id": 33,
       "links": [],
       "options": {
         "legend": {
           "calcs": [
-            "lastNotNull",
+            "last",
             "max"
           ],
           "displayMode": "list",
@@ -1036,51 +1142,70 @@
       "pluginVersion": "8.1.5",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
           "exemplar": true,
-          "expr": "sum by (pod) (jvm_memory_used_bytes{application='krisk'})",
+          "expr": "sum by (pod) (jvm_memory_used_bytes{application='krisk',pod=\"$pod\",namespace=\"$namespace\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
-          "legendFormat": "used_{{pod}}",
+          "legendFormat": "used",
           "metric": "",
+          "range": true,
           "refId": "A",
           "step": 2400
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
           "exemplar": true,
-          "expr": "sum by (pod) (jvm_memory_committed_bytes{application='krisk'})",
+          "expr": "sum by (pod) (jvm_memory_committed_bytes{application='krisk',pod=\"$pod\",namespace=\"$namespace\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
-          "legendFormat": "committed_{{pod}}",
+          "legendFormat": "committed",
+          "range": true,
           "refId": "B",
           "step": 2400
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
           "exemplar": true,
-          "expr": "sum by (pod) (jvm_memory_max_bytes{application='krisk'})",
+          "expr": "sum by (pod) (jvm_memory_max_bytes{application='krisk',pod=\"$pod\",namespace=\"$namespace\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
-          "legendFormat": "max_{{pod}}",
+          "legendFormat": "max",
+          "range": true,
           "refId": "C",
           "step": 2400
         }
       ],
       "title": "JVM Total",
+      "transparent": true,
       "type": "timeseries"
     },
     {
       "alert": {
         "alertRuleTags": {
           "application": "krisk",
-          "env": "prod"
+          "env": "beta"
         },
         "conditions": [
           {
             "evaluator": {
               "params": [
-                70
+                80
               ],
               "type": "gt"
             },
@@ -1110,6 +1235,10 @@
         "noDataState": "no_data",
         "notifications": []
       },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1129,7 +1258,7 @@
             },
             "lineInterpolation": "linear",
             "lineWidth": 1,
-            "pointSize": 5,
+            "pointSize": 2,
             "scaleDistribution": {
               "type": "linear"
             },
@@ -1143,7 +1272,10 @@
               "mode": "off"
             }
           },
+          "decimals": 1,
           "mappings": [],
+          "max": 100,
+          "min": 0,
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -1167,7 +1299,7 @@
         "x": 0,
         "y": 39
       },
-      "id": 177,
+      "id": 34,
       "options": {
         "legend": {
           "calcs": [],
@@ -1181,10 +1313,16 @@
       },
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
           "exemplar": true,
-          "expr": "(sum by (pod) (jvm_memory_used_bytes{application='krisk', area='heap'})* 100) /sum by (pod) (jvm_memory_max_bytes{application='krisk', area='heap'}) ",
+          "expr": "(sum by (pod,namespace) (jvm_memory_used_bytes{application='krisk', area='heap'})* 100) /sum by (pod,namespace) (jvm_memory_max_bytes{application='krisk', area='heap'}) ",
           "interval": "",
-          "legendFormat": "heap_usage_{{pod}}",
+          "legendFormat": "heap_usage_{{pod}}({{namespace}})",
+          "range": true,
           "refId": "HeapUsage"
         }
       ],
@@ -1192,18 +1330,19 @@
         {
           "colorMode": "critical",
           "op": "gt",
-          "value": 70,
+          "value": 80,
           "visible": true
         }
       ],
       "title": "Heap Usage",
+      "transparent": true,
       "type": "timeseries"
     },
     {
       "alert": {
         "alertRuleTags": {
           "application": "krisk",
-          "env": "prod"
+          "env": "beta"
         },
         "conditions": [
           {
@@ -1239,6 +1378,10 @@
         "noDataState": "no_data",
         "notifications": []
       },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1258,7 +1401,7 @@
             },
             "lineInterpolation": "linear",
             "lineWidth": 1,
-            "pointSize": 5,
+            "pointSize": 2,
             "scaleDistribution": {
               "type": "linear"
             },
@@ -1272,7 +1415,10 @@
               "mode": "off"
             }
           },
+          "decimals": 1,
           "mappings": [],
+          "max": 100,
+          "min": 0,
           "thresholds": {
             "mode": "percentage",
             "steps": [
@@ -1296,7 +1442,7 @@
         "x": 8,
         "y": 39
       },
-      "id": 178,
+      "id": 35,
       "options": {
         "legend": {
           "calcs": [],
@@ -1310,10 +1456,16 @@
       },
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
           "exemplar": true,
-          "expr": "(sum by (pod) (jvm_memory_used_bytes{application='krisk', area='nonheap'})* 100) /sum by (pod) (jvm_memory_max_bytes{application='krisk', area='nonheap'}) ",
+          "expr": "(sum by (pod,namespace) (jvm_memory_used_bytes{application='krisk', area='nonheap'})* 100) /sum by (pod,namespace) (jvm_memory_max_bytes{application='krisk', area='nonheap'}) ",
           "interval": "",
-          "legendFormat": "nonheap_usage_{{pod}}",
+          "legendFormat": "nonheap_usage_{{pod}}({{namespace}})",
+          "range": true,
           "refId": "NonHeapUsage"
         }
       ],
@@ -1326,6 +1478,7 @@
         }
       ],
       "title": "Non Heap Usage",
+      "transparent": true,
       "type": "timeseries"
     },
     {
@@ -1343,25 +1496,74 @@
       "id": 130,
       "panels": [],
       "repeat": "pod",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "JVM Memory Pools (Non-Heap)",
       "type": "row"
     },
     {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
       "datasource": {
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "editable": true,
-      "error": false,
-      "fill": 1,
-      "fillGradient": 0,
-      "grid": {
-        "leftLogBase": 1,
-        "rightLogBase": 1
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "bytes"
+        },
+        "overrides": []
       },
       "gridPos": {
         "h": 9,
@@ -1369,115 +1571,90 @@
         "x": 0,
         "y": 49
       },
-      "hiddenSeries": false,
-      "id": 78,
-      "legend": {
-        "alignAsTable": false,
-        "avg": false,
-        "current": true,
-        "max": true,
-        "min": false,
-        "rightSide": false,
-        "show": true,
-        "total": false,
-        "values": true
-      },
-      "lines": true,
-      "linewidth": 1,
+      "id": 41,
       "links": [],
-      "maxPerRow": 3,
-      "nullPointMode": "null",
       "options": {
-        "alertThreshold": true
+        "legend": {
+          "calcs": [
+            "last",
+            "max"
+          ],
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
       },
-      "percentage": false,
-      "pluginVersion": "8.4.2",
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
+      "pluginVersion": "9.0.5",
       "repeat": "jvm_memory_pool_nonheap",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
           "exemplar": true,
-          "expr": "jvm_memory_used_bytes{pod=\"$pod\", id=\"$jvm_memory_pool_nonheap\"}",
+          "expr": "jvm_memory_used_bytes{pod=\"$pod\", id=\"$jvm_memory_pool_nonheap\",pod=\"$pod\",namespace=\"$namespace\"}",
           "format": "time_series",
           "hide": false,
           "interval": "",
           "intervalFactor": 2,
-          "legendFormat": "used {{pod}}",
+          "legendFormat": "used",
           "metric": "",
+          "range": true,
           "refId": "A",
           "step": 1800
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
           "exemplar": true,
-          "expr": "jvm_memory_committed_bytes{pod=\"$pod\", id=\"$jvm_memory_pool_nonheap\"}",
+          "expr": "jvm_memory_committed_bytes{pod=\"$pod\", id=\"$jvm_memory_pool_nonheap\",pod=\"$pod\",namespace=\"$namespace\"}",
           "format": "time_series",
           "hide": false,
           "interval": "",
           "intervalFactor": 2,
-          "legendFormat": "commited  {{pod}}",
+          "legendFormat": "commited",
           "metric": "",
+          "range": true,
           "refId": "B",
           "step": 1800
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
           "exemplar": true,
-          "expr": "jvm_memory_max_bytes{pod=\"$pod\", id=\"$jvm_memory_pool_nonheap\"}",
+          "expr": "jvm_memory_max_bytes{pod=\"$pod\", id=\"$jvm_memory_pool_nonheap\",pod=\"$pod\",namespace=\"$namespace\"}",
           "format": "time_series",
           "hide": false,
           "interval": "",
           "intervalFactor": 2,
-          "legendFormat": "max  {{pod}}",
+          "legendFormat": "max",
           "metric": "",
+          "range": true,
           "refId": "C",
           "step": 1800
         }
       ],
-      "thresholds": [],
-      "timeRegions": [],
       "title": "$jvm_memory_pool_nonheap $pod",
-      "tooltip": {
-        "msResolution": false,
-        "shared": true,
-        "sort": 0,
-        "value_type": "cumulative"
-      },
-      "type": "graph",
-      "x-axis": true,
-      "xaxis": {
-        "mode": "time",
-        "show": true,
-        "values": []
-      },
-      "y-axis": true,
-      "y_formats": [
-        "mbytes",
-        "short"
-      ],
-      "yaxes": [
-        {
-          "format": "bytes",
-          "logBase": 1,
-          "min": 0,
-          "show": true
-        },
-        {
-          "format": "short",
-          "logBase": 1,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false
-      }
+      "transparent": true,
+      "type": "timeseries"
     },
     {
       "collapsed": false,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -1486,6 +1663,15 @@
       },
       "id": 165,
       "panels": [],
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "Dubbo Requests Overview",
       "type": "row"
     },
@@ -1493,13 +1679,13 @@
       "alert": {
         "alertRuleTags": {
           "application": "krisk",
-          "env": "prod"
+          "env": "beta"
         },
         "conditions": [
           {
             "evaluator": {
               "params": [
-                0.9
+                0.95
               ],
               "type": "lt"
             },
@@ -1529,6 +1715,10 @@
         "noDataState": "no_data",
         "notifications": []
       },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1538,7 +1728,7 @@
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
-            "drawStyle": "points",
+            "drawStyle": "line",
             "fillOpacity": 0,
             "gradientMode": "none",
             "hideFrom": {
@@ -1548,7 +1738,7 @@
             },
             "lineInterpolation": "linear",
             "lineWidth": 1,
-            "pointSize": 5,
+            "pointSize": 2,
             "scaleDistribution": {
               "type": "linear"
             },
@@ -1600,7 +1790,7 @@
         "x": 0,
         "y": 59
       },
-      "id": 151,
+      "id": 51,
       "options": {
         "legend": {
           "calcs": [],
@@ -1615,8 +1805,13 @@
       "pluginVersion": "8.1.5",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
           "exemplar": true,
-          "expr": "(sum by (pod, interface) (increase(dubbo_request_success_total{application='krisk'}[2m])/120))/(sum by (pod, interface) (increase(dubbo_request_total{application='krisk'}[2m])/120))",
+          "expr": "(sum by (namespace,pod, interface) (increase(dubbo_request_success_total{application='krisk'}[2m])/120))/(sum by (namespace,pod, interface) (increase(dubbo_request_total{application='krisk'}[2m])/120))",
           "instant": false,
           "interval": "",
           "legendFormat": "{{pod}}_{{interface}}",
@@ -1627,18 +1822,19 @@
         {
           "colorMode": "critical",
           "op": "lt",
-          "value": 0.9,
+          "value": 0.95,
           "visible": true
         }
       ],
       "title": "Dubbo Request Success Rate",
+      "transparent": true,
       "type": "timeseries"
     },
     {
       "alert": {
         "alertRuleTags": {
           "application": "krisk",
-          "env": "prod"
+          "env": "beta"
         },
         "conditions": [
           {
@@ -1673,6 +1869,10 @@
         "noDataState": "no_data",
         "notifications": []
       },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1692,7 +1892,7 @@
             },
             "lineInterpolation": "linear",
             "lineWidth": 1,
-            "pointSize": 5,
+            "pointSize": 2,
             "scaleDistribution": {
               "type": "linear"
             },
@@ -1738,7 +1938,7 @@
         "x": 8,
         "y": 59
       },
-      "id": 157,
+      "id": 52,
       "options": {
         "legend": {
           "calcs": [],
@@ -1752,8 +1952,12 @@
       },
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
           "exemplar": true,
-          "expr": "sum by (pod, interface, method) (dubbo_request_latency_seconds{application='krisk', quantile='0.9'}*1000)",
+          "expr": "sum by (namespace,pod, interface, method) (dubbo_request_latency_seconds{application='krisk', quantile='0.9'}*1000)",
           "interval": "",
           "legendFormat": "{{pod}}_{{interface}}.{{method}}",
           "refId": "A"
@@ -1768,13 +1972,14 @@
         }
       ],
       "title": "Dubbo Request Latency",
+      "transparent": true,
       "type": "timeseries"
     },
     {
       "alert": {
         "alertRuleTags": {
           "application": "krisk",
-          "env": "prod"
+          "env": "beta"
         },
         "conditions": [
           {
@@ -1809,6 +2014,10 @@
         "noDataState": "no_data",
         "notifications": []
       },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1828,7 +2037,7 @@
             },
             "lineInterpolation": "linear",
             "lineWidth": 1,
-            "pointSize": 5,
+            "pointSize": 2,
             "scaleDistribution": {
               "type": "linear"
             },
@@ -1865,7 +2074,7 @@
         "x": 16,
         "y": 59
       },
-      "id": 159,
+      "id": 53,
       "options": {
         "legend": {
           "calcs": [],
@@ -1879,8 +2088,12 @@
       },
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
           "exemplar": true,
-          "expr": "sum by (pod, interface) (increase(dubbo_request_concurrent_total{application='krisk'}[2m])/120)",
+          "expr": "sum by (namespace,pod, interface) (increase(dubbo_request_concurrent_total{application='krisk'}[2m])/120)",
           "interval": "",
           "legendFormat": "{{pod}}_{{interface}}",
           "refId": "A"
@@ -1895,6 +2108,7 @@
         }
       ],
       "title": "Dubbo Request Concurrent",
+      "transparent": true,
       "type": "timeseries"
     },
     {
@@ -1911,6 +2125,15 @@
       },
       "id": 126,
       "panels": [],
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "HttpRequests Overview",
       "type": "row"
     },
@@ -2020,7 +2243,7 @@
         "x": 0,
         "y": 69
       },
-      "id": 111,
+      "id": 61,
       "links": [],
       "options": {
         "legend": {
@@ -2038,8 +2261,12 @@
       "pluginVersion": "8.1.5",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
           "exemplar": true,
-          "expr": "sum by (pod, uri) (rate(http_server_requests_seconds_count{application='krisk'}[2m]))",
+          "expr": "sum by (namespace,pod, uri) (rate(http_server_requests_seconds_count{application='krisk'}[2m]))",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -2056,6 +2283,7 @@
         }
       ],
       "title": "Http Request Rate",
+      "transparent": true,
       "type": "timeseries"
     },
     {
@@ -2168,7 +2396,7 @@
         "x": 8,
         "y": 69
       },
-      "id": 113,
+      "id": 62,
       "links": [],
       "options": {
         "legend": {
@@ -2186,8 +2414,12 @@
       "pluginVersion": "8.1.5",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
           "exemplar": true,
-          "expr": "sum by (pod, uri) (rate(http_server_requests_seconds_sum{application=\"krisk\", status!~\"5..\"}[2m]))/sum by (pod, uri) (rate(http_server_requests_seconds_count{application=\"krisk\", status!~\"5..\"}[2m]))",
+          "expr": "sum by (namespace,pod, uri) (rate(http_server_requests_seconds_sum{application=\"krisk\", status!~\"5..\"}[2m]))/sum by (namespace,pod, uri) (rate(http_server_requests_seconds_count{application=\"krisk\", status!~\"5..\"}[2m]))",
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -2196,8 +2428,12 @@
           "refId": "avg_request_count"
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
           "exemplar": true,
-          "expr": "max by (pod, uri) (http_server_requests_seconds_max{application=\"krisk\", status!~\"5..\"})",
+          "expr": "max by (namespace,pod, uri) (http_server_requests_seconds_max{application=\"krisk\", status!~\"5..\"})",
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -2215,6 +2451,7 @@
         }
       ],
       "title": "Duration",
+      "transparent": true,
       "type": "timeseries"
     },
     {
@@ -2361,7 +2598,7 @@
         "x": 16,
         "y": 69
       },
-      "id": 112,
+      "id": 63,
       "links": [],
       "options": {
         "legend": {
@@ -2379,8 +2616,12 @@
       "pluginVersion": "8.1.5",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
           "exemplar": true,
-          "expr": "sum by (pod, uri) (rate(http_server_requests_seconds_count{application=\"krisk\", status=~\"5..\"}[2m]))",
+          "expr": "sum by (namespace,pod, uri) (rate(http_server_requests_seconds_count{application=\"krisk\", status=~\"5..\"}[2m]))",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -2397,6 +2638,7 @@
         }
       ],
       "title": "Http-Errors-5xx",
+      "transparent": true,
       "type": "timeseries"
     },
     {
@@ -2413,6 +2655,15 @@
       },
       "id": 131,
       "panels": [],
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "Garbage Collection",
       "type": "row"
     },
@@ -2517,7 +2768,7 @@
         "x": 0,
         "y": 79
       },
-      "id": 98,
+      "id": 71,
       "links": [],
       "options": {
         "legend": {
@@ -2533,8 +2784,12 @@
       "pluginVersion": "8.1.5",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
           "exemplar": true,
-          "expr": "avg by (pod, action, cause) (rate(jvm_gc_pause_seconds_count{application=\"krisk\"}[2m]))",
+          "expr": "avg by (namespace,pod, action, cause) (rate(jvm_gc_pause_seconds_count{application=\"krisk\"}[2m]))",
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -2543,8 +2798,12 @@
           "refId": "A"
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
           "exemplar": true,
-          "expr": "avg by (pod, cause) (rate(jvm_gc_pause_seconds_count{application=\"krisk\", action=\"end of major GC\"}[2m]))",
+          "expr": "avg by (namespace,pod, cause) (rate(jvm_gc_pause_seconds_count{application=\"krisk\", action=\"end of major GC\"}[2m]))",
           "hide": false,
           "interval": "",
           "legendFormat": "MajorGC_{{pod}}",
@@ -2560,6 +2819,7 @@
         }
       ],
       "title": "Collections",
+      "transparent": true,
       "type": "timeseries"
     },
     {
@@ -2663,7 +2923,7 @@
         "x": 8,
         "y": 79
       },
-      "id": 101,
+      "id": 72,
       "links": [],
       "options": {
         "legend": {
@@ -2679,8 +2939,12 @@
       "pluginVersion": "8.1.5",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
           "exemplar": true,
-          "expr": "avg by (pod, action, cause) (rate(jvm_gc_pause_seconds_sum{application=\"krisk\"}[2m])/rate(jvm_gc_pause_seconds_count{application=\"krisk\"}[2m]))",
+          "expr": "avg by (namespace,pod, action, cause) (rate(jvm_gc_pause_seconds_sum{application=\"krisk\"}[2m])/rate(jvm_gc_pause_seconds_count{application=\"krisk\"}[2m]))",
           "format": "time_series",
           "hide": false,
           "instant": false,
@@ -2690,8 +2954,12 @@
           "refId": "A"
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
           "exemplar": true,
-          "expr": "avg by (pod, action, cause) (jvm_gc_pause_seconds_max{application=\"krisk\"})",
+          "expr": "avg by (namespace,pod, action, cause) (jvm_gc_pause_seconds_max{application=\"krisk\"})",
           "format": "time_series",
           "hide": false,
           "instant": false,
@@ -2710,6 +2978,7 @@
         }
       ],
       "title": "Pause Durations",
+      "transparent": true,
       "type": "timeseries"
     },
     {
@@ -2775,7 +3044,7 @@
         "x": 16,
         "y": 79
       },
-      "id": 99,
+      "id": 73,
       "links": [],
       "options": {
         "legend": {
@@ -2791,6 +3060,10 @@
       "pluginVersion": "8.1.5",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
           "exemplar": true,
           "expr": "avg by (pod) (rate(jvm_gc_memory_allocated_bytes_total{application=\"krisk\"}[2m]))",
           "format": "time_series",
@@ -2800,6 +3073,10 @@
           "refId": "A"
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
           "exemplar": true,
           "expr": "avg by (pod) (rate(jvm_gc_memory_promoted_bytes_total{application=\"krisk\"}[2m]))",
           "format": "time_series",
@@ -2810,6 +3087,7 @@
         }
       ],
       "title": "Allocated/Promoted",
+      "transparent": true,
       "type": "timeseries"
     },
     {
@@ -2826,6 +3104,15 @@
       },
       "id": 128,
       "panels": [],
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "Container",
       "type": "row"
     },
@@ -2953,7 +3240,7 @@
           },
           "decimals": 1,
           "mappings": [],
-          "max": 1,
+          "max": 100,
           "min": 0,
           "thresholds": {
             "mode": "absolute",
@@ -2964,11 +3251,11 @@
               },
               {
                 "color": "red",
-                "value": 80
+                "value": 85
               }
             ]
           },
-          "unit": "percentunit"
+          "unit": "percent"
         },
         "overrides": []
       },
@@ -2978,14 +3265,11 @@
         "x": 0,
         "y": 89
       },
-      "id": 106,
+      "id": 81,
       "links": [],
       "options": {
         "legend": {
-          "calcs": [
-            "lastNotNull",
-            "max"
-          ],
+          "calcs": [],
           "displayMode": "list",
           "placement": "bottom"
         },
@@ -2997,36 +3281,22 @@
       "pluginVersion": "8.1.5",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
           "exemplar": true,
-          "expr": "avg by (pod) (system_cpu_usage{application=\"krisk\"})",
+          "expr": "sum(irate(container_cpu_usage_seconds_total{container=\"krisk\"}[5m])*100)by(namespace,pod)/sum(container_spec_cpu_quota{container=\"krisk\"}/container_spec_cpu_period{container=\"krisk\"})by(namespace,pod)",
           "format": "time_series",
           "hide": false,
           "interval": "",
           "intervalFactor": 1,
-          "legendFormat": "system_{{pod}}",
+          "legendFormat": "{{pod}}",
           "metric": "",
+          "range": true,
           "refId": "system_cpu_usage",
           "step": 2400
-        },
-        {
-          "exemplar": true,
-          "expr": "avg by (pod) (process_cpu_usage{application=\"krisk\"})",
-          "format": "time_series",
-          "hide": false,
-          "interval": "",
-          "intervalFactor": 1,
-          "legendFormat": "process_{{pod}}",
-          "refId": "process_cpu_usage"
-        },
-        {
-          "exemplar": true,
-          "expr": "avg by (pod) (avg_over_time(process_cpu_usage{application=\"krisk\"}[1h]))",
-          "format": "time_series",
-          "hide": false,
-          "interval": "",
-          "intervalFactor": 1,
-          "legendFormat": "process-1h_{{pod}}",
-          "refId": "process_cpu_usage_1h"
         }
       ],
       "thresholds": [
@@ -3038,6 +3308,7 @@
         }
       ],
       "title": "CPU",
+      "transparent": true,
       "type": "timeseries"
     },
     {
@@ -3115,6 +3386,7 @@
           },
           "decimals": 1,
           "mappings": [],
+          "max": 1,
           "min": 0,
           "thresholds": {
             "mode": "absolute",
@@ -3139,14 +3411,11 @@
         "x": 8,
         "y": 89
       },
-      "id": 93,
+      "id": 82,
       "links": [],
       "options": {
         "legend": {
-          "calcs": [
-            "lastNotNull",
-            "max"
-          ],
+          "calcs": [],
           "displayMode": "list",
           "placement": "bottom"
         },
@@ -3158,27 +3427,25 @@
       "pluginVersion": "8.1.5",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
           "exemplar": true,
-          "expr": "avg by (pod) (system_load_average_1m{application='krisk'})",
+          "expr": "sum(container_cpu_load_average_10s{container=\"krisk\"})by(namespace,pod)/sum(container_spec_cpu_quota{container=\"krisk\"}/container_spec_cpu_period{container=\"krisk\"})by(namespace,pod)/1000",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
-          "legendFormat": "system-1m-{{pod}}",
+          "legendFormat": "{{pod}}",
           "metric": "",
+          "range": true,
           "refId": "A",
           "step": 2400
-        },
-        {
-          "exemplar": true,
-          "expr": "avg by (pod) (system_cpu_count{application='krisk'})",
-          "format": "time_series",
-          "interval": "",
-          "intervalFactor": 2,
-          "legendFormat": "cpu--{{pod}}",
-          "refId": "C"
         }
       ],
       "title": "Load",
+      "transparent": true,
       "type": "timeseries"
     },
     {
@@ -3359,14 +3626,11 @@
         "x": 16,
         "y": 89
       },
-      "id": 91,
+      "id": 83,
       "links": [],
       "options": {
         "legend": {
-          "calcs": [
-            "lastNotNull",
-            "max"
-          ],
+          "calcs": [],
           "displayMode": "list",
           "placement": "bottom"
         },
@@ -3378,13 +3642,19 @@
       "pluginVersion": "8.1.5",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
           "exemplar": true,
           "expr": "increase(log4j2_events_total{application='krisk', level =~'error|warn'}[2m])",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
-          "legendFormat": "{{pod}}_{{level}}",
+          "legendFormat": "{{namespace}}_{{pod}}_{{level}}",
           "metric": "",
+          "range": true,
           "refId": "A",
           "step": 1200
         }
@@ -3398,6 +3668,7 @@
         }
       ],
       "title": "Log Events (2m)-Error",
+      "transparent": true,
       "type": "timeseries"
     },
     {
@@ -3410,7 +3681,7 @@
           {
             "evaluator": {
               "params": [
-                1
+                4
               ],
               "type": "gt"
             },
@@ -3595,14 +3866,11 @@
         "x": 0,
         "y": 98
       },
-      "id": 124,
+      "id": 84,
       "links": [],
       "options": {
         "legend": {
-          "calcs": [
-            "lastNotNull",
-            "max"
-          ],
+          "calcs": [],
           "displayMode": "list",
           "placement": "bottom"
         },
@@ -3614,17 +3882,26 @@
       "pluginVersion": "8.1.5",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
           "exemplar": true,
-          "expr": "sum by (pod, state) (jvm_threads_states_threads{application='krisk'})",
+          "expr": "sum(jvm_threads_states_threads{application='krisk'}) by (pod,namespace,state)",
           "format": "time_series",
+          "hide": false,
           "interval": "",
           "intervalFactor": 2,
           "legendFormat": "{{pod}}_{{state}}",
           "refId": "A"
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
           "exemplar": true,
-          "expr": "sum by (pod) (jvm_threads_states_threads{application='krisk', state=\"blocked\"})",
+          "expr": "sum(jvm_threads_states_threads{application='krisk',state='blocked'}) by (pod,namespace)",
           "hide": false,
           "interval": "",
           "legendFormat": "block_thread_{{pod}}",
@@ -3635,11 +3912,12 @@
         {
           "colorMode": "critical",
           "op": "gt",
-          "value": 1,
+          "value": 4,
           "visible": true
         }
       ],
       "title": "Thread States",
+      "transparent": true,
       "type": "timeseries"
     },
     {
@@ -3816,14 +4094,11 @@
         "x": 8,
         "y": 98
       },
-      "id": 32,
+      "id": 85,
       "links": [],
       "options": {
         "legend": {
-          "calcs": [
-            "lastNotNull",
-            "max"
-          ],
+          "calcs": [],
           "displayMode": "list",
           "placement": "bottom"
         },
@@ -3835,9 +4110,14 @@
       "pluginVersion": "8.1.5",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
           "exemplar": true,
-          "expr": "sum by (pod) (jvm_threads_live_threads{application=\"krisk\"})",
+          "expr": "sum by (namespace,pod) (jvm_threads_live_threads{application=\"krisk\"})",
           "format": "time_series",
+          "hide": false,
           "interval": "",
           "intervalFactor": 2,
           "legendFormat": "live_{{pod}}",
@@ -3846,9 +4126,14 @@
           "step": 2400
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
           "exemplar": true,
-          "expr": " sum by (pod) (jvm_threads_daemon_threads{application=\"krisk\"})",
+          "expr": " sum by (namespace,pod) (jvm_threads_daemon_threads{application=\"krisk\"})",
           "format": "time_series",
+          "hide": true,
           "interval": "",
           "intervalFactor": 2,
           "legendFormat": "daemon_{{pod}}",
@@ -3857,9 +4142,14 @@
           "step": 2400
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
           "exemplar": true,
-          "expr": " sum by (pod) (jvm_threads_peak_threads{application=\"krisk\"})",
+          "expr": " sum by (namespace,pod) (jvm_threads_peak_threads{application=\"krisk\"})",
           "format": "time_series",
+          "hide": true,
           "interval": "",
           "intervalFactor": 2,
           "legendFormat": "peak_{{pod}}",
@@ -3867,9 +4157,14 @@
           "step": 2400
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
           "exemplar": true,
-          "expr": "sum by (pod) (jvm_threads_states_threads{application=\"krisk\"})",
+          "expr": "sum by (namespace,pod) (jvm_threads_states_threads{application=\"krisk\"})",
           "format": "time_series",
+          "hide": true,
           "interval": "",
           "intervalFactor": 2,
           "legendFormat": "process_{{pod}}",
@@ -3886,6 +4181,7 @@
         }
       ],
       "title": "Threads",
+      "transparent": true,
       "type": "timeseries"
     },
     {
@@ -3950,6 +4246,10 @@
         "noDataState": "no_data",
         "notifications": []
       },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -3970,7 +4270,7 @@
             },
             "lineInterpolation": "linear",
             "lineWidth": 1,
-            "pointSize": 5,
+            "pointSize": 2,
             "scaleDistribution": {
               "type": "linear"
             },
@@ -4007,7 +4307,7 @@
         "x": 16,
         "y": 98
       },
-      "id": 184,
+      "id": 86,
       "options": {
         "legend": {
           "calcs": [],
@@ -4021,18 +4321,30 @@
       },
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
           "exemplar": true,
-          "expr": "sum by (container) (increase(kube_pod_container_status_restarts_total{container='krisk'}[10m]))",
+          "expr": "sum by (container,pod,namespace) (increase(kube_pod_container_status_restarts_total{container='krisk'}[10m]))",
           "interval": "",
-          "legendFormat": "restart {{container}}",
+          "legendFormat": "restart_{{namespace}}_{{pod}}",
+          "range": true,
           "refId": "restart"
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
           "exemplar": true,
-          "expr": "sum by (container) (increase(kube_pod_container_status_last_terminated_reason{container='krisk', reason=\"OOMKilled\"}[10m]))",
+          "expr": "sum by (container,pod,namespace) (increase(kube_pod_container_status_last_terminated_reason{container='krisk', reason=\"OOMKilled\"}[10m]))",
           "hide": false,
           "interval": "",
-          "legendFormat": "OOM {{container}}",
+          "legendFormat": "OOM_{{namespace}}_{{pod}}",
+          "range": true,
           "refId": "oom"
         }
       ],
@@ -4045,6 +4357,7 @@
         }
       ],
       "title": "Pod Restart or OOM",
+      "transparent": true,
       "type": "timeseries"
     },
     {
@@ -4061,6 +4374,15 @@
       },
       "id": 132,
       "panels": [],
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "Classloading",
       "type": "row"
     },
@@ -4127,7 +4449,7 @@
         "x": 0,
         "y": 108
       },
-      "id": 37,
+      "id": 91,
       "links": [],
       "options": {
         "legend": {
@@ -4143,6 +4465,10 @@
       "pluginVersion": "8.1.5",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
           "exemplar": true,
           "expr": " sum by (pod) (jvm_classes_loaded_classes{application=\"krisk\"})",
           "format": "time_series",
@@ -4155,24 +4481,64 @@
         }
       ],
       "title": "Classes loaded",
+      "transparent": true,
       "type": "timeseries"
     },
     {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
       "datasource": {
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "editable": true,
-      "error": false,
-      "fill": 1,
-      "fillGradient": 0,
-      "grid": {
-        "leftLogBase": 1,
-        "rightLogBase": 1
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
       },
       "gridPos": {
         "h": 7,
@@ -4180,35 +4546,26 @@
         "x": 12,
         "y": 108
       },
-      "hiddenSeries": false,
-      "id": 38,
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
+      "id": 92,
       "links": [],
-      "nullPointMode": "null",
       "options": {
-        "alertThreshold": true
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
       },
-      "percentage": false,
-      "pluginVersion": "8.4.2",
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
+      "pluginVersion": "9.0.5",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
           "exemplar": true,
           "expr": " sum by (pod) (delta(jvm_classes_loaded_classes{application=\"krisk\"}[5m]))",
           "format": "time_series",
@@ -4221,43 +4578,9 @@
           "step": 1200
         }
       ],
-      "thresholds": [],
-      "timeRegions": [],
       "title": "Class delta (5m)",
-      "tooltip": {
-        "msResolution": false,
-        "shared": true,
-        "sort": 0,
-        "value_type": "cumulative"
-      },
-      "type": "graph",
-      "x-axis": true,
-      "xaxis": {
-        "mode": "time",
-        "show": true,
-        "values": []
-      },
-      "y-axis": true,
-      "y_formats": [
-        "ops",
-        "short"
-      ],
-      "yaxes": [
-        {
-          "format": "short",
-          "label": "",
-          "logBase": 1,
-          "show": true
-        },
-        {
-          "format": "short",
-          "logBase": 1,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false
-      }
+      "transparent": true,
+      "type": "timeseries"
     },
     {
       "collapsed": false,
@@ -4273,6 +4596,15 @@
       },
       "id": 133,
       "panels": [],
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "Buffer Pools",
       "type": "row"
     },
@@ -4339,7 +4671,7 @@
         "x": 0,
         "y": 116
       },
-      "id": 33,
+      "id": 101,
       "links": [],
       "options": {
         "legend": {
@@ -4355,6 +4687,10 @@
       "pluginVersion": "8.1.5",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
           "exemplar": true,
           "expr": "avg by (pod) (jvm_buffer_memory_used_bytes{application=\"krisk\", id=\"direct\"})",
           "format": "time_series",
@@ -4366,6 +4702,10 @@
           "step": 2400
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
           "exemplar": true,
           "expr": "jvm_buffer_total_capacity_bytes{application=\"krisk\", id=\"direct\"}",
           "format": "time_series",
@@ -4378,6 +4718,7 @@
         }
       ],
       "title": "Direct Buffers",
+      "transparent": true,
       "type": "timeseries"
     },
     {
@@ -4444,7 +4785,7 @@
         "x": 6,
         "y": 116
       },
-      "id": 83,
+      "id": 102,
       "links": [],
       "options": {
         "legend": {
@@ -4460,18 +4801,25 @@
       "pluginVersion": "8.1.5",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
           "exemplar": true,
           "expr": "jvm_buffer_count_buffers{application=\"krisk\", id=\"direct\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
-          "legendFormat": "count",
+          "legendFormat": "count_{{pod}}",
           "metric": "",
+          "range": true,
           "refId": "A",
           "step": 2400
         }
       ],
       "title": "Direct Buffers",
+      "transparent": true,
       "type": "timeseries"
     },
     {
@@ -4537,7 +4885,7 @@
         "x": 12,
         "y": 116
       },
-      "id": 85,
+      "id": 103,
       "links": [],
       "options": {
         "legend": {
@@ -4553,6 +4901,10 @@
       "pluginVersion": "8.1.5",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
           "exemplar": true,
           "expr": "avg by (pod) (jvm_buffer_memory_used_bytes{application=\"krisk\", id=\"mapped\"})",
           "format": "time_series",
@@ -4564,6 +4916,10 @@
           "step": 2400
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
           "exemplar": true,
           "expr": "avg by (pod) (jvm_buffer_total_capacity_bytes{application=\"krisk\", id=\"mapped\"})",
           "format": "time_series",
@@ -4576,6 +4932,7 @@
         }
       ],
       "title": "Mapped Buffers",
+      "transparent": true,
       "type": "timeseries"
     },
     {
@@ -4642,7 +4999,7 @@
         "x": 18,
         "y": 116
       },
-      "id": 84,
+      "id": 104,
       "links": [],
       "options": {
         "legend": {
@@ -4658,6 +5015,10 @@
       "pluginVersion": "8.1.5",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
           "exemplar": true,
           "expr": "avg by (pod) (jvm_buffer_count_buffers{application=\"krisk\", id=\"mapped\"})",
           "format": "time_series",
@@ -4670,11 +5031,12 @@
         }
       ],
       "title": "Mapped Buffers count",
+      "transparent": true,
       "type": "timeseries"
     }
   ],
   "refresh": "",
-  "schemaVersion": 35,
+  "schemaVersion": 36,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -4683,14 +5045,46 @@
         "allFormat": "glob",
         "current": {
           "selected": false,
-          "text": "blue-krisk-564f6bd78-rcrx2",
-          "value": "blue-krisk-564f6bd78-rcrx2"
+          "text": "kikitrade-prod",
+          "value": "kikitrade-prod"
         },
         "datasource": {
           "type": "prometheus",
           "uid": "prometheus"
         },
-        "definition": "label_values(container_memory_usage_bytes{container=\"krisk\", }, pod)",
+        "definition": "label_values(container_memory_usage_bytes{container=\"krisk\", }, namespace)",
+        "hide": 0,
+        "includeAll": false,
+        "label": "namespace",
+        "multi": false,
+        "multiFormat": "glob",
+        "name": "namespace",
+        "options": [],
+        "query": {
+          "query": "label_values(container_memory_usage_bytes{container=\"krisk\", }, namespace)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allFormat": "glob",
+        "current": {
+          "selected": false,
+          "text": "blue-krisk-858f56774d-jkszg",
+          "value": "blue-krisk-858f56774d-jkszg"
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "prometheus"
+        },
+        "definition": "label_values(container_memory_usage_bytes{container=\"krisk\", namespace=\"$namespace\"}, pod)",
         "hide": 0,
         "includeAll": false,
         "label": "pod",
@@ -4699,7 +5093,7 @@
         "name": "pod",
         "options": [],
         "query": {
-          "query": "label_values(container_memory_usage_bytes{container=\"krisk\", }, pod)",
+          "query": "label_values(container_memory_usage_bytes{container=\"krisk\", namespace=\"$namespace\"}, pod)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 2,
@@ -4722,7 +5116,7 @@
           "type": "prometheus",
           "uid": "prometheus"
         },
-        "definition": "label_values(jvm_memory_used_bytes{pod=\"$pod\", area=\"heap\"},id)",
+        "definition": "label_values(jvm_memory_used_bytes{pod=\"$pod\", area=\"heap\",},id)",
         "hide": 0,
         "includeAll": true,
         "label": "JVM Memory Pools Heap",
@@ -4731,7 +5125,7 @@
         "name": "jvm_memory_pool_heap",
         "options": [],
         "query": {
-          "query": "label_values(jvm_memory_used_bytes{pod=\"$pod\", area=\"heap\"},id)",
+          "query": "label_values(jvm_memory_used_bytes{pod=\"$pod\", area=\"heap\",},id)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 1,
@@ -4754,7 +5148,7 @@
           "type": "prometheus",
           "uid": "prometheus"
         },
-        "definition": "label_values(jvm_memory_used_bytes{pod=\"$pod\", area=\"nonheap\"},id)",
+        "definition": "label_values(jvm_memory_used_bytes{pod=\"$pod\", area=\"nonheap\",},id)",
         "hide": 0,
         "includeAll": true,
         "label": "JVM Memory Pools Non-Heap",
@@ -4763,7 +5157,7 @@
         "name": "jvm_memory_pool_nonheap",
         "options": [],
         "query": {
-          "query": "label_values(jvm_memory_used_bytes{pod=\"$pod\", area=\"nonheap\"},id)",
+          "query": "label_values(jvm_memory_used_bytes{pod=\"$pod\", area=\"nonheap\",},id)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 1,
@@ -4778,7 +5172,7 @@
     ]
   },
   "time": {
-    "from": "now-3h",
+    "from": "now-12h",
     "to": "now"
   },
   "timepicker": {
@@ -4809,7 +5203,7 @@
   },
   "timezone": "browser",
   "title": "krisk",
-  "uid": "krisk6789",
-  "version": 1,
+  "uid": "krisk",
+  "version": 73,
   "weekStart": ""
 }
