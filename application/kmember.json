@@ -3402,24 +3402,7 @@
           },
           "unit": "short"
         },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "cores"
-            },
-            "properties": [
-              {
-                "id": "custom.axisPlacement",
-                "value": "right"
-              },
-              {
-                "id": "decimals",
-                "value": 0
-              }
-            ]
-          }
-        ]
+        "overrides": []
       },
       "gridPos": {
         "h": 9,
@@ -3449,7 +3432,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "sum(container_cpu_load_average_10s{container=\"kmember\"})by(namespace,pod)/1000",
+          "expr": "sum(container_cpu_load_average_10s{container=\"kmember\"})by(namespace,pod)/sum(container_spec_cpu_quota{container=\"kmember\"}/container_spec_cpu_period{container=\"kmember\"})by(namespace,pod)/1000",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -3458,18 +3441,6 @@
           "range": true,
           "refId": "A",
           "step": 2400
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
-          },
-          "editorMode": "code",
-          "expr": "sum(container_spec_cpu_quota{container=\"kmember\"}/container_spec_cpu_period{container=\"kmember\"})by(namespace,pod)",
-          "hide": false,
-          "legendFormat": "cores",
-          "range": true,
-          "refId": "B"
         }
       ],
       "title": "Load",
