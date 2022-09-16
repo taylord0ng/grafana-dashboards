@@ -3432,7 +3432,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "sum(container_cpu_load_average_10s{container=\"trading-engine\"})by(namespace,pod)/sum(container_spec_cpu_quota{container=\"trading-engine\"}/container_spec_cpu_period{container=\"trading-engine\"})by(namespace,pod)/1000",
+          "expr": "sum(container_cpu_load_average_10s{container=\"trading-engine\"})by(namespace,pod)/1000",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,

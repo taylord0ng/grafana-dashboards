@@ -3432,7 +3432,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "sum(container_cpu_load_average_10s{container=\"ksearch\"})by(namespace,pod)/sum(container_spec_cpu_quota{container=\"ksearch\"}/container_spec_cpu_period{container=\"ksearch\"})by(namespace,pod)/1000",
+          "expr": "sum(container_cpu_load_average_10s{container=\"ksearch\"})by(namespace,pod)/1000",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
